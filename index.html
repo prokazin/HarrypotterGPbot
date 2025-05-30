@@ -1,24 +1,46 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HARRY POTTER</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body>
-  <h1>🧙 HARRY POTTER</h1>
-  <div id="counter">Галлеонов: 0</div>
+body {
+  font-family: 'Arial', sans-serif;
+  background: url('hogwarts-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  user-select: none;
+}
 
-  <!-- Клик по палочке -->
-  <img src="wand.png" id="wand" alt="Волшебная палочка" />
+h1, h2 {
+  text-shadow: 2px 2px 4px #000;
+}
 
-  <h2>🔮 Апгрейды</h2>
-  <div id="shop">
-    <button onclick="buyUpgrade('wand')">Палочка Оливандера (+1/клик) – 50</button>
-  </div>
+#counter {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 
-  <script src="main.js"></script>
-</body>
-</html>
+#wand {
+  width: 150px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+#wand:active {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  background-color: #6a5acd;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+button:hover {
+  background-color: #7b68ee;
+}
