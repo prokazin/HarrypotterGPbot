@@ -5,7 +5,9 @@ let clickPower = 1;
 Telegram.WebApp.ready();
 Telegram.WebApp.expand();
 
-// Обёртка для Cloud Storage
+const counterEl = document.getElementById("counter");
+const wandImg = document.getElementById("wand");
+
 async function loadProgress() {
   try {
     const keys = ['gold', 'clickPower'];
@@ -30,19 +32,15 @@ async function saveProgress() {
   }
 }
 
-// DOM элементы
-const counterEl = document.getElementById("counter");
-const clickBtn = document.getElementById("click-btn");
+function updateCounter() {
+  counterEl.textContent = `Галлеонов: ${gold}`;
+}
 
-clickBtn.addEventListener("click", () => {
+wandImg.addEventListener("click", () => {
   gold += clickPower;
   updateCounter();
   saveProgress();
 });
-
-function updateCounter() {
-  counterEl.textContent = `Галлеонов: ${gold}`;
-}
 
 function buyUpgrade(type) {
   if (type === 'wand' && gold >= 50) {
@@ -51,8 +49,10 @@ function buyUpgrade(type) {
     updateCounter();
     saveProgress();
     alert("Вы купили Палочку Оливандера! +1 к галлеонам за клик.");
+  } else if (type === 'wand') {
+    alert("Недостаточно галлеонов для покупки.");
   }
 }
 
-// Загрузка при запуске
+// Загрузка при старте
 loadProgress();
