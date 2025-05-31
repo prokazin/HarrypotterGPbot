@@ -3,327 +3,434 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Хогвартс: Магический Кликер</title>
+<title>Хогвартс Кликер</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
-
   body {
-    font-family: 'UnifrakturCook', cursive;
-    background: url('images/background.jpeg') no-repeat center center fixed;
+    margin: 0;
+    font-family: 'MedievalSharp', cursive;
+    background: url('images/background.png') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
+    color: #f5f1da;
+    user-select: none;
+  }
+  #app {
+    max-width: 480px;
+    margin: auto;
+    padding: 20px;
     text-align: center;
-    margin: 0; padding: 0 20px 40px;
-    user-select: none;
+    background: rgba(0,0,0,0.6);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
-  h1, h2 {
-    text-shadow: 2px 2px 4px #000;
+  h1 {
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px #000;
   }
-  #game, #test, #upgrades, #leaderboard {
-    display: none;
+  /* Навигация */
+  #nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
   }
-  #test.active, #game.active, #upgrades.active, #leaderboard.active {
-    display: block;
-  }
-  #counter {
-    font-size: 24px;
-    margin: 20px 0 10px;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px black;
-  }
-  #wand {
-    width: 150px;
-    cursor: pointer;
-    user-select: none;
-    margin: 20px auto 10px;
-    border-radius: 15px;
-    box-shadow:
-      0 0 10px 3px rgba(255, 215, 0, 0.7),
-      0 0 20px 6px rgba(255, 215, 0, 0.4);
-    filter: drop-shadow(0 0 4px gold);
-    animation: glowPulse 3s infinite alternate ease-in-out;
-    transition: transform 0.15s ease;
-    display: block;
-  }
-  #wand:active {
-    transform: scale(1.2) rotate(-5deg);
-    animation-play-state: paused;
-    box-shadow:
-      0 0 20px 6px rgba(255, 255, 224, 1),
-      0 0 30px 12px rgba(255, 255, 224, 0.8);
-    filter: drop-shadow(0 0 10px #fffacd);
-  }
-  @keyframes glowPulse {
-    0% {
-      box-shadow:
-        0 0 10px 3px rgba(255, 215, 0, 0.7),
-        0 0 20px 6px rgba(255, 215, 0, 0.4);
-    }
-    100% {
-      box-shadow:
-        0 0 20px 8px rgba(255, 215, 0, 1),
-        0 0 30px 14px rgba(255, 215, 0, 0.7);
-    }
-  }
-  button {
-    padding: 10px 20px;
-    margin: 10px 5px 0;
-    font-size: 18px;
-    background-color: #6a5acd;
+  #nav button {
+    background: #6a5acd;
     border: none;
     border-radius: 10px;
     color: white;
+    margin: 0 8px;
+    padding: 10px 18px;
+    font-size: 16px;
     cursor: pointer;
-    user-select: none;
-    text-shadow: 1px 1px 2px black;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
   }
-  button:hover {
-    background-color: #7b68ee;
+  #nav button:hover, #nav button.active {
+    background: #7b68ee;
   }
-  #nav {
-    margin-top: 10px;
-  }
+  /* Тест */
   .question {
-    font-size: 20px;
-    margin: 20px 0 10px;
+    margin: 20px 0;
+    font-size: 18px;
+  }
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
   }
   .answers button {
-    display: block;
-    margin: 8px auto;
-    width: 60%;
-  }
-  #upgrade-list button {
-    display: block;
-    width: 60%;
-    margin: 10px auto;
-  }
-  #leaderboard-list {
-    margin-top: 10px;
-    max-height: 200px;
-    overflow-y: auto;
-    background: rgba(0,0,0,0.4);
-    border-radius: 8px;
     padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #6a5acd;
+    color: white;
+    transition: background-color 0.3s ease;
   }
-  #leaderboard-list div {
-    padding: 5px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+  .answers button:hover {
+    background: #7b68ee;
+  }
+  /* Палочка */
+  #wand {
+    width: 150px;
+    margin: 30px auto 15px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    user-select: none;
+  }
+  #wand:active {
+    transform: scale(1.1) rotate(-10deg);
+  }
+  /* Счётчик */
+  #counter {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 3px #000;
+  }
+  /* Улучшения */
+  #upgrades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .upgrade {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 12px;
+  }
+  .upgrade-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .upgrade-info {
+    margin-bottom: 10px;
+  }
+  .upgrade button {
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background: #6a5acd;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .upgrade button:disabled {
+    background: #444;
+    cursor: default;
+  }
+  .upgrade button:hover:not(:disabled) {
+    background: #7b68ee;
+  }
+  /* Рейтинг */
+  #leaderboard {
+    text-align: left;
+  }
+  #leaderboard h2 {
+    margin-bottom: 10px;
+  }
+  #leaderboard ol {
+    padding-left: 20px;
+  }
+  /* Скрытие вкладок */
+  .tab {
+    display: none;
+  }
+  .tab.active {
+    display: block;
   }
 </style>
 </head>
 <body>
+<div id="app">
 
-<h1>Хогвартс: Магический Кликер</h1>
+  <h1>Хогвартс Кликер</h1>
 
-<div id="test" class="active">
-  <h2>Пройди тест и получи свою палочку</h2>
-  <div id="question-container"></div>
-</div>
-
-<div id="game">
-  <h2>Твой магический кликер</h2>
-  <div id="counter">Галлеонов: 0</div>
-  <img id="wand" src="" alt="Палочка" />
+  <!-- Навигация -->
   <div id="nav">
-    <button onclick="showSection('upgrades')">Улучшения</button>
-    <button onclick="showSection('leaderboard')">Рейтинг</button>
+    <button id="tab-play-btn" class="active">Игра</button>
+    <button id="tab-upgrades-btn">Улучшения</button>
+    <button id="tab-leaderboard-btn">Рейтинг</button>
   </div>
-</div>
 
-<div id="upgrades">
-  <h2>Улучшения</h2>
-  <div id="upgrade-list"></div>
-  <button onclick="showSection('game')">Назад в игру</button>
-</div>
-
-<div id="leaderboard">
-  <h2>Рейтинг игроков</h2>
-  <div id="leaderboard-list">
-    <div>1. Волдеморт — 5000 галлеонов</div>
-    <div>2. Гарри Поттер — 4000 галлеонов</div>
-    <div>3. Гермиона — 3500 галлеонов</div>
-    <div>4. Рон — 3200 галлеонов</div>
+  <!-- Вкладка: Тест -->
+  <div id="tab-test" class="tab active">
+    <div id="question-container"></div>
   </div>
-  <button onclick="showSection('game')">Назад в игру</button>
+
+  <!-- Вкладка: Игра -->
+  <div id="tab-play" class="tab">
+    <img id="wand" src="" alt="Палочка" title="Кликни на палочку!" />
+    <div id="counter">Клики: 0</div>
+  </div>
+
+  <!-- Вкладка: Улучшения -->
+  <div id="tab-upgrades" class="tab">
+    <div id="upgrades-list"></div>
+  </div>
+
+  <!-- Вкладка: Рейтинг -->
+  <div id="tab-leaderboard" class="tab">
+    <h2>Топ игроков</h2>
+    <ol id="leaderboard-list"></ol>
+  </div>
+
 </div>
 
 <script>
-  // Палочки героев (название, картинка jpeg в images)
-  const wands = [
-    {name: "Палочка Гарри Поттера", img: "images/harry.jpeg"},
-    {name: "Палочка Гермионы", img: "images/hermione.jpeg"},
-    {name: "Палочка Рона", img: "images/ron.jpeg"},
-    {name: "Палочка Волдеморта", img: "images/voldemort.jpeg"},
-    {name: "Палочка Дамблдора", img: "images/dumbledore.jpeg"},
-    {name: "Палочка Снейпа", img: "images/snape.jpeg"},
-    {name: "Палочка Лунной Лавгуд", img: "images/luna.jpeg"},
-    {name: "Палочка Невилла", img: "images/neville.jpeg"},
-    {name: "Палочка Макгонагалл", img: "images/mcgonagall.jpeg"},
-    {name: "Палочка Фреда и Джорджа", img: "images/fredgeorge.jpeg"}
-  ];
-
-  // Тестовые вопросы и ответы
   const questions = [
     {
-      question: "Какой факультет Хогвартса тебе ближе?",
+      question: "Какое ваше любимое занятие в Хогвартсе?",
       answers: [
-        {text: "Гриффиндор", wandIndex: 0},
-        {text: "Когтевран", wandIndex: 1},
-        {text: "Пуффендуй", wandIndex: 2},
-        {text: "Слизерин", wandIndex: 3},
+        { text: "Защита от тёмных искусств", wand: "wand_harry.png" },
+        { text: "Зельеварение", wand: "wand_hermione.png" },
+        { text: "Квиддич", wand: "wand_ron.png" },
+        { text: "Изучение истории магии", wand: "wand_dumbledore.png" },
+        { text: "Починка зелий и зельеварение", wand: "wand_snape.png" }
       ]
     },
     {
-      question: "Какой магический предмет ты бы выбрал?",
+      question: "Кто ваш любимый факультет?",
       answers: [
-        {text: "Мантия-невидимка", wandIndex: 0},
-        {text: "Карта Мародёров", wandIndex: 4},
-        {text: "Зелье Полета", wandIndex: 5},
-        {text: "Шляпа Распределения", wandIndex: 6},
+        { text: "Гриффиндор", wand: "wand_gryffindor.png" },
+        { text: "Когтевран", wand: "wand_ravenclaw.png" },
+        { text: "Пуффендуй", wand: "wand_hufflepuff.png" },
+        { text: "Слизерин", wand: "wand_slytherin.png" }
       ]
     },
     {
-      question: "Какое твое любимое магическое существо?",
+      question: "Какое животное вы бы выбрали в Хогвартсе?",
       answers: [
-        {text: "Феникс", wandIndex: 4},
-        {text: "Хиппогриф", wandIndex: 7},
-        {text: "Кентавр", wandIndex: 8},
-        {text: "Домовой эльф", wandIndex: 9},
+        { text: "Феникс", wand: "wand_dumbledore.png" },
+        { text: "Сова", wand: "wand_hermione.png" },
+        { text: "Крыса", wand: "wand_ron.png" },
+        { text: "Змея", wand: "wand_voldemort.png" }
       ]
     },
     {
-      question: "Какую магическую способность ты бы хотел иметь?",
+      question: "Какое качество вам ближе всего?",
       answers: [
-        {text: "Невидимость", wandIndex: 0},
-        {text: "Левитация", wandIndex: 1},
-        {text: "Зачарование", wandIndex: 2},
-        {text: "Заклинания защиты", wandIndex: 3},
+        { text: "Смелость", wand: "wand_harry.png" },
+        { text: "Ум", wand: "wand_hermione.png" },
+        { text: "Верность", wand: "wand_ron.png" },
+        { text: "Амбициозность", wand: "wand_slytherin.png" }
       ]
     },
     {
-      question: "Твое любимое волшебное заклинание?",
+      question: "Что вы выберете в Хогвартсе?",
       answers: [
-        {text: "Экспекто Патронум", wandIndex: 0},
-        {text: "Авада Кедавра", wandIndex: 3},
-        {text: "Вингардиум Левиоса", wandIndex: 1},
-        {text: "Люмос", wandIndex: 4},
+        { text: "Магия огня", wand: "wand_gryffindor.png" },
+        { text: "Магия воды", wand: "wand_ravenclaw.png" },
+        { text: "Магия земли", wand: "wand_hufflepuff.png" },
+        { text: "Магия тьмы", wand: "wand_voldemort.png" }
       ]
     }
   ];
 
-  let currentQuestionIndex = 0;
-  let answersCount = {};
-  let selectedWandIndex = 0;
+  const upgrades = [
+    { id: 'autoClicker', name: "Авто-кликер", basePrice: 10, level: 0, effect: 1, desc: "Автоматически прибавляет 1 клик в секунду" },
+    { id: 'doubleClick', name: "Двойной клик", basePrice: 25, level: 0, effect: 2, desc: "Каждый клик приносит в 2 раза больше очков" }
+  ];
 
-  function showSection(sectionId) {
-    ['test','game','upgrades','leaderboard'].forEach(id => {
-      document.getElementById(id).classList.remove('active');
-    });
-    document.getElementById(sectionId).classList.add('active');
+  // Хранение данных
+  let currentQuestion = 0;
+  let chosenWand = null;
+  let clicks = 0;
+  let clickMultiplier = 1;
+  let autoClickInterval = null;
+
+  // Элементы DOM
+  const questionContainer = document.getElementById('question-container');
+  const wandImg = document.getElementById('wand');
+  const counterEl = document.getElementById('counter');
+  const upgradesListEl = document.getElementById('upgrades-list');
+  const leaderboardListEl = document.getElementById('leaderboard-list');
+
+  // Навигация
+  const tabs = {
+    test: document.getElementById('tab-test'),
+    play: document.getElementById('tab-play'),
+    upgrades: document.getElementById('tab-upgrades'),
+    leaderboard: document.getElementById('tab-leaderboard')
+  };
+
+  const navButtons = {
+    play: document.getElementById('tab-play-btn'),
+    upgrades: document.getElementById('tab-upgrades-btn'),
+    leaderboard: document.getElementById('tab-leaderboard-btn')
+  };
+
+  function switchTab(name) {
+    for (let t in tabs) {
+      tabs[t].classList.remove('active');
+      if(navButtons[t]) navButtons[t].classList.remove('active');
+    }
+    tabs[name].classList.add('active');
+    if(navButtons[name]) navButtons[name].classList.add('active');
   }
 
+  navButtons.play.onclick = () => switchTab('play');
+  navButtons.upgrades.onclick = () => switchTab('upgrades');
+  navButtons.leaderboard.onclick = () => {
+    updateLeaderboard();
+    switchTab('leaderboard');
+  };
+
+  // Загрузка прогресса
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('hpGameSave'));
+    if(saved) {
+      clicks = saved.clicks || 0;
+      chosenWand = saved.chosenWand || null;
+      upgrades.forEach(u => {
+        if(saved.upgrades && saved.upgrades[u.id] != null){
+          u.level = saved.upgrades[u.id];
+        }
+      });
+      clickMultiplier = 1;
+      if(upgrades.find(u => u.id === 'doubleClick' && u.level > 0)) {
+        clickMultiplier = 2;
+      }
+      updateClicksDisplay();
+      if(chosenWand) {
+        wandImg.src = 'images/' + chosenWand;
+        switchTab('play');
+      } else {
+        switchTab('test');
+        renderQuestion();
+      }
+    } else {
+      switchTab('test');
+      renderQuestion();
+    }
+  }
+
+  // Сохранение прогресса
+  function saveProgress() {
+    const upgradesSave = {};
+    upgrades.forEach(u => upgradesSave[u.id] = u.level);
+    localStorage.setItem('hpGameSave', JSON.stringify({
+      clicks,
+      chosenWand,
+      upgrades: upgradesSave
+    }));
+  }
+
+  // Рендер вопроса теста
   function renderQuestion() {
-    const container = document.getElementById('question-container');
-    const q = questions[currentQuestionIndex];
-    container.innerHTML = `<div class="question">${q.question}</div><div class="answers"></div>`;
-    const answersDiv = container.querySelector('.answers');
-    q.answers.forEach(a => {
+    const q = questions[currentQuestion];
+    questionContainer.innerHTML = `<div class="question">${q.question}</div><div class="answers"></div>`;
+    const answersDiv = questionContainer.querySelector('.answers');
+    q.answers.forEach((ans, i) => {
       const btn = document.createElement('button');
-      btn.textContent = a.text;
+      btn.textContent = ans.text;
       btn.onclick = () => {
-        answersCount[a.wandIndex] = (answersCount[a.wandIndex] || 0) + 1;
-        currentQuestionIndex++;
-        if(currentQuestionIndex < questions.length) {
-          renderQuestion();
+        // Сохраняем палочку
+        chosenWand = ans.wand;
+        // Переходим к следующему вопросу или завершаем тест
+        currentQuestion++;
+        if(currentQuestion >= questions.length) {
+          // Тест окончен
+          wandImg.src = 'images/' + chosenWand;
+          switchTab('play');
+          saveProgress();
         } else {
-          selectWandByAnswers();
-          startGame();
+          renderQuestion();
         }
       };
       answersDiv.appendChild(btn);
     });
   }
 
-  function selectWandByAnswers() {
-    // Найти wandIndex с наибольшим кол-вом ответов
-    let maxCount = -1;
-    for (const k in answersCount) {
-      if(answersCount[k] > maxCount) {
-        maxCount = answersCount[k];
-        selectedWandIndex = Number(k);
-      }
-    }
+  // Обновить отображение кликов
+  function updateClicksDisplay() {
+    counterEl.textContent = `Клики: ${clicks}`;
   }
 
-  // Игра
-  let galleons = 0;
-  let upgradeCost = 10;
-  let upgradeLevel = 0;
-
-  function saveProgress() {
-    localStorage.setItem('galleons', galleons);
-    localStorage.setItem('selectedWandIndex', selectedWandIndex);
-    localStorage.setItem('upgradeLevel', upgradeLevel);
-  }
-  function loadProgress() {
-    const savedGalleons = localStorage.getItem('galleons');
-    const savedWand = localStorage.getItem('selectedWandIndex');
-    const savedUpgrade = localStorage.getItem('upgradeLevel');
-    if(savedGalleons !== null) galleons = parseInt(savedGalleons);
-    if(savedWand !== null) selectedWandIndex = parseInt(savedWand);
-    if(savedUpgrade !== null) upgradeLevel = parseInt(savedUpgrade);
-  }
-
-  function startGame() {
-    loadProgress();
-    showSection('game');
-    updateWand();
-    updateCounter();
-    renderUpgrades();
-  }
-
-  function updateWand() {
-    const wandImg = document.getElementById('wand');
-    wandImg.src = wands[selectedWandIndex].img;
-    wandImg.alt = wands[selectedWandIndex].name;
-  }
-
-  function updateCounter() {
-    document.getElementById('counter').textContent = `Галлеонов: ${galleons}`;
-  }
-
-  document.getElementById('wand').onclick = () => {
-    galleons += (1 + upgradeLevel);
-    updateCounter();
+  // Логика клика по палочке
+  wandImg.addEventListener('click', () => {
+    clicks += clickMultiplier;
+    updateClicksDisplay();
     saveProgress();
-  };
+  });
 
-  // Улучшения
+  // Рендер улучшений
   function renderUpgrades() {
-    const container = document.getElementById('upgrade-list');
-    container.innerHTML = '';
-    const upgradeBtn = document.createElement('button');
-    upgradeBtn.textContent = `Улучшить палочку (+1 галлеон за клик) — Стоимость: ${upgradeCost}`;
-    upgradeBtn.onclick = () => {
-      if(galleons >= upgradeCost) {
-        galleons -= upgradeCost;
-        upgradeLevel++;
-        upgradeCost = Math.floor(upgradeCost * 1.7);
-        updateCounter();
-        renderUpgrades();
-        saveProgress();
-      } else {
-        alert('Недостаточно галлеонов');
-      }
-    };
-    container.appendChild(upgradeBtn);
+    upgradesListEl.innerHTML = '';
+    upgrades.forEach(upg => {
+      const price = Math.floor(upg.basePrice * Math.pow(1.5, upg.level));
+      const div = document.createElement('div');
+      div.className = 'upgrade';
+      div.innerHTML = `
+        <div class="upgrade-title">${upg.name} (Уровень: ${upg.level})</div>
+        <div class="upgrade-info">${upg.desc}</div>
+        <button ${clicks < price ? 'disabled' : ''} data-id="${upg.id}">Купить за ${price} галлеонов</button>
+      `;
+      upgradesListEl.appendChild(div);
+      div.querySelector('button').onclick = () => {
+        if(clicks >= price) {
+          clicks -= price;
+          upg.level++;
+          if(upg.id === 'doubleClick') clickMultiplier = 2;
+          if(upg.id === 'autoClicker') {
+            if(autoClickInterval) clearInterval(autoClickInterval);
+            autoClickInterval = setInterval(() => {
+              clicks += upg.effect * upg.level;
+              updateClicksDisplay();
+              saveProgress();
+            }, 1000);
+          }
+          updateClicksDisplay();
+          saveProgress();
+          renderUpgrades();
+        }
+      };
+    });
   }
 
-  // Инициализация
-  renderQuestion();
+  // Рейтинг (локальный)
+  function updateLeaderboard() {
+    // Хранение топа в localStorage
+    let leaderboard = JSON.parse(localStorage.getItem('hpLeaderboard')) || [];
+
+    // Текущий игрок
+    let playerName = prompt("Введите ваше имя для рейтинга", "Маг");
+    if(!playerName) playerName = "Маг";
+
+    // Добавляем/обновляем игрока в рейтинге
+    const existingIndex = leaderboard.findIndex(p => p.name === playerName);
+    if(existingIndex >= 0) {
+      if(clicks > leaderboard[existingIndex].score) {
+        leaderboard[existingIndex].score = clicks;
+      }
+    } else {
+      leaderboard.push({ name: playerName, score: clicks });
+    }
+
+    // Сортировка и обрезка до топ 10
+    leaderboard.sort((a,b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0,10);
+
+    localStorage.setItem('hpLeaderboard', JSON.stringify(leaderboard));
+
+    // Отображаем
+    leaderboardListEl.innerHTML = '';
+    leaderboard.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = `${p.name} — ${p.score} кликов`;
+      leaderboardListEl.appendChild(li);
+    });
+  }
+
+  // Начинаем с загрузки прогресса
+  loadProgress();
+
+  // При переходе на вкладку Улучшения рендерим список
+  navButtons.upgrades.addEventListener('click', renderUpgrades);
 
 </script>
-
 </body>
 </html>
