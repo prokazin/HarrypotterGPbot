@@ -1,244 +1,584 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Harry Potter Wand Clicker</title>
-  <style>
-    /* Ваши существующие стили остаются без изменений */
-    @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
-    body {
-      font-family: 'MedievalSharp', cursive, Arial, sans-serif;
-      background: url('images/background.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      user-select: none;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    /* ... остальные ваши стили ... */
-
-    /* Добавляем новые стили для компактного теста */
-    .wand-test-container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.7);
-    }
-    
-    .wand-test-intro {
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-    
-    .wand-question {
-      margin-bottom: 15px;
-      padding: 10px;
-      border-left: 3px solid #7b68ee;
-      text-align: left;
-    }
-    
-    .wand-option {
-      display: block;
-      margin: 8px 0;
-      padding: 8px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-    
-    .wand-option:hover {
-      background: rgba(123, 104, 238, 0.2);
-    }
-    
-    .wand-submit {
-      background-color: #7b68ee;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-      margin: 20px auto;
-      transition: all 0.3s ease;
-    }
-    
-    .wand-submit:hover {
-      background-color: #8a7aee;
-      transform: scale(1.05);
-    }
-    
-    .wand-result {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гарри Поттер Кликер</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0e24;
+            color: #f0e6d2;
+            text-align: center;
+            padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(10, 14, 36, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #5d2906;
+            box-shadow: 0 0 20px rgba(232, 185, 35, 0.3);
+        }
+        
+        h1 {
+            color: #e8b923;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 10px;
+        }
+        
+        #magic-wand-container {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            margin: 20px auto;
+        }
+        
+        #magic-wand {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            transition: transform 0.1s;
+            background-image: url('https://www.pngitem.com/pimgs/m/424-4242380_harry-potter-wand-hd-png-download.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #magic-wand:active {
+            transform: scale(0.95);
+        }
+        
+        #stats {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(93, 41, 6, 0.3);
+            border-radius: 5px;
+            border: 1px solid #e8b923;
+        }
+        
+        .spell-button {
+            background-color: #5d2906;
+            color: #f0e6d2;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .spell-button:hover {
+            background-color: #7a3a0c;
+            transform: translateY(-2px);
+        }
+        
+        .spell-button:disabled {
+            background-color: #333;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        #upgrades {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .upgrade {
+            background-color: rgba(93, 41, 6, 0.5);
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 140px;
+            border: 1px solid #e8b92333;
+        }
+        
+        .tab-container {
+            margin: 15px 0;
+        }
+        
+        .tab-button {
+            background-color: #5d2906;
+            color: #f0e6d2;
+            border: none;
+            padding: 8px 15px;
+            margin: 0 2px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: #7a3a0c;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+            background-color: rgba(93, 41, 6, 0.3);
+            border-radius: 0 5px 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .wand-option {
+            background-color: rgba(232, 185, 35, 0.1);
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #e8b92333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .wand-option:hover {
+            background-color: rgba(232, 185, 35, 0.2);
+        }
+        
+        .wand-option.selected {
+            background-color: rgba(232, 185, 35, 0.3);
+            border: 1px solid #e8b923;
+        }
+        
+        .spell-animation {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        #save-notification {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #5d2906;
+            color: #f0e6d2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Ваш существующий код -->
-  <div id="magicEffect"></div>
-  <!-- ... -->
-
-  <!-- Заменяем старый тест на новый компактный вариант -->
-  <div id="testDiv" class="wand-test-container">
-    <h2>Тест на выбор волшебной палочки</h2>
-    
-    <div class="wand-test-intro">
-      <p>Ответьте на 5 вопросов, чтобы найти свою идеальную палочку. Помните - палочка выбирает волшебника!</p>
+    <div class="container">
+        <h1>Гарри Поттер Кликер</h1>
+        
+        <div id="stats">
+            <h2>Заклинания: <span id="spells">0</span></h2>
+            <p>Заклинаний в секунду: <span id="spellsPerSecond">0</span></p>
+            <p>Сила клика: <span id="clickPower">1</span></p>
+        </div>
+        
+        <div id="magic-wand-container">
+            <div id="magic-wand" onclick="castSpell()"></div>
+        </div>
+        
+        <div class="tab-container">
+            <button class="tab-button active" onclick="openTab('spells-tab')">Заклинания</button>
+            <button class="tab-button" onclick="openTab('wands-tab')">Палочки</button>
+            <button class="tab-button" onclick="openTab('upgrades-tab')">Улучшения</button>
+        </div>
+        
+        <div id="spells-tab" class="tab-content active">
+            <h3>Изученные заклинания:</h3>
+            <button class="spell-button" onclick="buySpell('Lumos', 10, 0.1)">Люмос (10)</button>
+            <button class="spell-button" onclick="buySpell('Wingardium Leviosa', 50, 0.5)">Вингардиум Левиоса (50)</button>
+            <button class="spell-button" onclick="buySpell('Expelliarmus', 100, 1)">Экспеллиармус (100)</button>
+            <button class="spell-button" onclick="buySpell('Expecto Patronum', 500, 5)">Экспекто Патронум (500)</button>
+        </div>
+        
+        <div id="wands-tab" class="tab-content">
+            <h3>Выберите палочку:</h3>
+            <div class="wand-option selected" onclick="selectWand('holly', 1.0, 'https://www.pngitem.com/pimgs/m/424-4242380_harry-potter-wand-hd-png-download.png')">
+                <h4>Палочка из остролиста</h4>
+                <p>Базовая сила: 1x</p>
+                <p>Гарри Поттер</p>
+            </div>
+            <div class="wand-option" onclick="selectWand('vine', 1.2, 'https://www.pngitem.com/pimgs/m/167-1676392_hermione-granger-wand-transparent-hd-png-download.png')">
+                <h4>Палочка из виноградной лозы</h4>
+                <p>Базовая сила: 1.2x</p>
+                <p>Гермиона Грейнджер</p>
+            </div>
+            <div class="wand-option" onclick="selectWand('willow', 1.5, 'https://www.pngitem.com/pimgs/m/167-1676396_ron-weasley-wand-hd-png-download.png')">
+                <h4>Палочка из ивы</h4>
+                <p>Базовая сила: 1.5x</p>
+                <p>Рон Уизли</p>
+            </div>
+            <div class="wand-option" onclick="selectWand('elder', 2.0, 'https://www.pngitem.com/pimgs/m/167-1676400_elder-wand-hd-png-download.png')">
+                <h4>Бузинная палочка</h4>
+                <p>Базовая сила: 2.0x</p>
+                <p>Дары Смерти</p>
+            </div>
+        </div>
+        
+        <div id="upgrades-tab" class="tab-content">
+            <div id="upgrades">
+                <div class="upgrade">
+                    <h4>Сова</h4>
+                    <p>Приносит 1 заклинание в секунду</p>
+                    <button onclick="buyUpgrade('owl', 50, 1)">Купить (50)</button>
+                    <p>Куплено: <span id="owl-count">0</span></p>
+                </div>
+                
+                <div class="upgrade">
+                    <h4>Мантия-невидимка</h4>
+                    <p>Удваивает эффективность заклинаний</p>
+                    <button onclick="buyUpgrade('cloak', 200, 0)">Купить (200)</button>
+                    <p>Куплено: <span id="cloak-count">0</span></p>
+                </div>
+                
+                <div class="upgrade">
+                    <h4>Квиддич</h4>
+                    <p>Дает 5 заклинаний в секунду</p>
+                    <button onclick="buyUpgrade('quidditch', 1000, 5)">Купить (1000)</button>
+                    <p>Куплено: <span id="quidditch-count">0</span></p>
+                </div>
+            </div>
+        </div>
     </div>
     
-    <form id="testForm">
-      <div class="wand-question">
-        <p>1. Какое качество вы цените в себе больше всего?</p>
-        <label class="wand-option">
-          <input type="radio" name="q1" value="harry" required> Смелость и решительность
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q1" value="hermione"> Ум и любознательность
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q1" value="ron"> Верность и преданность
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q1" value="luna"> Творчество и оригинальность
-        </label>
-      </div>
+    <div id="save-notification">Прогресс сохранен!</div>
 
-      <div class="wand-question">
-        <p>2. Какой школьный предмет вам наиболее интересен?</p>
-        <label class="wand-option">
-          <input type="radio" name="q2" value="harry" required> Защита от Тёмных искусств
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q2" value="hermione"> Заклинания
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q2" value="ron"> Уход за магическими существами
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q2" value="luna"> Прорицания
-        </label>
-      </div>
-
-      <div class="wand-question">
-        <p>3. Как вы обычно решаете проблемы?</p>
-        <label class="wand-option">
-          <input type="radio" name="q3" value="harry" required> Действую быстро и решительно
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q3" value="hermione"> Анализирую и ищу оптимальное решение
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q3" value="ron"> Обращаюсь за помощью к друзьям
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q3" value="luna"> Полагаюсь на интуицию
-        </label>
-      </div>
-
-      <div class="wand-question">
-        <p>4. Какое магическое существо вам ближе?</p>
-        <label class="wand-option">
-          <input type="radio" name="q4" value="harry" required> Феникс
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q4" value="hermione"> Сова
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q4" value="ron"> Пёс
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q4" value="luna"> Единорог
-        </label>
-      </div>
-
-      <div class="wand-question">
-        <p>5. Какой волшебный артефакт вы бы выбрали?</p>
-        <label class="wand-option">
-          <input type="radio" name="q5" value="harry" required> Мантия-невидимка
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q5" value="hermione"> Маховик времени
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q5" value="ron"> Карта мародёров
-        </label>
-        <label class="wand-option">
-          <input type="radio" name="q5" value="luna"> Зеркало Еиналеж
-        </label>
-      </div>
-
-      <button type="submit" class="wand-submit">Получить палочку</button>
-    </form>
-  </div>
-
-  <!-- Ваш существующий код -->
-  <div id="gameArea" style="display:none;">
-    <!-- ... -->
-  </div>
-
-<script>
-  // Ваш существующий JavaScript код, но с обновлённой функцией обработки теста
-  testForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Собираем ответы
-    const scores = {harry:0, hermione:0, ron:0, luna:0};
-    
-    // Подсчитываем результаты
-    for(let i = 1; i <= 5; i++) {
-      const selected = document.querySelector(`input[name="q${i}"]:checked`).value;
-      scores[selected]++;
-    }
-    
-    // Определяем тип палочки
-    const maxScore = Math.max(...Object.values(scores));
-    selectedWand = Object.keys(scores).find(key => scores[key] === maxScore);
-    
-    // Описания палочек
-    const wandDescriptions = {
-      harry: {
-        name: "Палочка Гарри Поттера",
-        desc: "11 дюймов, остролист, перо феникса. Идеальна для защиты от тёмных искусств."
-      },
-      hermione: {
-        name: "Палочка Гермионы Грейнджер",
-        desc: "10¾ дюйма, виноградная лоза, сердечная жила дракона. Усиливает интеллектуальные заклинания."
-      },
-      ron: {
-        name: "Палочка Рона Уизли", 
-        desc: "14 дюймов, ива, волос единорога. Хороша для дружеских заклинаний и работы в команде."
-      },
-      luna: {
-        name: "Палочка Луны Лавгуд",
-        desc: "10 дюймов, вишнёвое дерево, волос телавола. Усиливает необычные и творческие заклинания."
-      }
-    };
-    
-    // Показываем результат (можно заменить на alert или другой способ отображения)
-    alert(`Ваша палочка: ${wandDescriptions[selectedWand].name}\n${wandDescriptions[selectedWand].desc}`);
-    
-    // Переходим к игровой области
-    testDiv.style.display = 'none';
-    gameArea.style.display = 'block';
-    loadProgress();
-    updateUI();
-    saveProgress();
-  });
-
-  // Остальной ваш JavaScript код...
-</script>
-
+    <script>
+        // Игровые переменные
+        let gameState = {
+            spells: 0,
+            spellsPerSecond: 0,
+            clickPower: 1,
+            wand: {
+                type: 'holly',
+                multiplier: 1.0,
+                image: 'https://www.pngitem.com/pimgs/m/424-4242380_harry-potter-wand-hd-png-download.png'
+            },
+            upgrades: {
+                owl: { count: 0, cost: 50, effect: 1 },
+                cloak: { count: 0, cost: 200, effect: 2 },
+                quidditch: { count: 0, cost: 1000, effect: 5 }
+            },
+            learnedSpells: []
+        };
+        
+        // Анимации заклинаний
+        const spellEffects = {
+            lumos: {
+                color: '#ffffff',
+                size: 30,
+                particles: 10
+            },
+            wingardium: {
+                color: '#aaffaa',
+                size: 40,
+                particles: 5,
+                trail: true
+            },
+            expelliarmus: {
+                color: '#ff5555',
+                size: 50,
+                particles: 15,
+                explosive: true
+            },
+            patronum: {
+                color: '#55aaff',
+                size: 60,
+                particles: 20,
+                special: true
+            }
+        };
+        
+        // Инициализация игры
+        function initGame() {
+            loadGame();
+            updateUI();
+            
+            // Игровой цикл
+            setInterval(() => {
+                gameState.spells += gameState.spellsPerSecond / 10;
+                updateUI();
+                
+                // Автосохранение каждые 30 секунд
+                if (Math.floor(Date.now() / 1000) % 30 === 0) {
+                    saveGame();
+                }
+            }, 100);
+            
+            // Для Telegram WebApp
+            if (window.Telegram.WebApp) {
+                Telegram.WebApp.expand();
+                Telegram.WebApp.enableClosingConfirmation();
+                
+                // Сохраняем при закрытии
+                Telegram.WebApp.onEvent('viewportChanged', (e) => {
+                    if (!e.isStateStable) saveGame();
+                });
+            }
+        }
+        
+        // Основные функции игры
+        function castSpell() {
+            let multiplier = gameState.wand.multiplier;
+            if (gameState.upgrades.cloak.count > 0) {
+                multiplier *= gameState.upgrades.cloak.effect;
+            }
+            
+            gameState.spells += gameState.clickPower * multiplier;
+            updateUI();
+            
+            // Анимация палочки
+            const wand = document.getElementById('magic-wand');
+            animateWand(wand);
+            
+            // Создание эффекта заклинания
+            createSpellEffect();
+        }
+        
+        function animateWand(element) {
+            element.style.transform = 'rotate(10deg) translateY(-5px)';
+            setTimeout(() => {
+                element.style.transform = 'rotate(-10deg) translateY(5px)';
+                setTimeout(() => {
+                    element.style.transform = 'rotate(0) translateY(0)';
+                }, 100);
+            }, 100);
+        }
+        
+        function createSpellEffect() {
+            const container = document.getElementById('magic-wand-container');
+            const wandRect = document.getElementById('magic-wand').getBoundingClientRect();
+            
+            // Выбираем случайное заклинание из изученных или базовый эффект
+            let effectType = 'lumos';
+            if (gameState.learnedSpells.length > 0) {
+                const randomSpell = gameState.learnedSpells[Math.floor(Math.random() * gameState.learnedSpells.length)];
+                effectType = randomSpell.toLowerCase().split(' ')[0];
+            }
+            
+            const effect = spellEffects[effectType] || spellEffects.lumos;
+            
+            // Создаем частицы
+            for (let i = 0; i < effect.particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'spell-animation';
+                particle.style.width = effect.size + 'px';
+                particle.style.height = effect.size + 'px';
+                particle.style.background = `radial-gradient(circle, ${effect.color}, transparent)`;
+                particle.style.borderRadius = '50%';
+                particle.style.left = (wandRect.left + wandRect.width/2 - effect.size/2 + Math.random() * 20 - 10) + 'px';
+                particle.style.top = (wandRect.top + wandRect.height/2 - effect.size/2) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                // Анимация частицы
+                animateParticle(particle, effect);
+            }
+        }
+        
+        function animateParticle(particle, effect) {
+            let posX = parseInt(particle.style.left);
+            let posY = parseInt(particle.style.top);
+            let size = effect.size;
+            let opacity = 1;
+            let velocityX = (Math.random() - 0.5) * 10;
+            let velocityY = -Math.random() * 15 - 5;
+            
+            if (effect.explosive) {
+                velocityX = (Math.random() - 0.5) * 20;
+                velocityY = (Math.random() - 0.5) * 20;
+            }
+            
+            const animation = setInterval(() => {
+                posX += velocityX;
+                posY += velocityY;
+                velocityY += 0.2; // Гравитация
+                
+                if (effect.trail) {
+                    size += 0.5;
+                }
+                
+                opacity -= 0.02;
+                
+                particle.style.left = posX + 'px';
+                particle.style.top = posY + 'px';
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.opacity = opacity;
+                
+                if (opacity <= 0 || posY > window.innerHeight) {
+                    clearInterval(animation);
+                    particle.remove();
+                }
+            }, 30);
+        }
+        
+        function buySpell(name, cost, effect) {
+            if (gameState.spells >= cost && !gameState.learnedSpells.includes(name)) {
+                gameState.spells -= cost;
+                gameState.learnedSpells.push(name);
+                gameState.spellsPerSecond += effect;
+                updateUI();
+                showNotification(`Вы изучили заклинание "${name}"!`);
+                saveGame();
+            } else if (gameState.learnedSpells.includes(name)) {
+                showNotification('Вы уже знаете это заклинание!');
+            } else {
+                showNotification('Недостаточно заклинаний!');
+            }
+        }
+        
+        function selectWand(type, multiplier, image) {
+            gameState.wand = {
+                type: type,
+                multiplier: multiplier,
+                image: image
+            };
+            
+            // Обновляем изображение палочки
+            document.getElementById('magic-wand').style.backgroundImage = `url('${image}')`;
+            
+            // Обновляем UI выбора палочки
+            document.querySelectorAll('.wand-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            showNotification(`Выбрана новая палочка: ${type}`);
+            saveGame();
+        }
+        
+        function buyUpgrade(type, cost, effect) {
+            if (gameState.spells >= gameState.upgrades[type].cost) {
+                gameState.spells -= gameState.upgrades[type].cost;
+                gameState.upgrades[type].count++;
+                gameState.upgrades[type].cost = Math.floor(gameState.upgrades[type].cost * 1.5);
+                
+                if (effect > 0) {
+                    gameState.spellsPerSecond += effect;
+                }
+                
+                updateUI();
+                showNotification(`Улучшение "${type}" куплено!`);
+                saveGame();
+            } else {
+                showNotification('Недостаточно заклинаний!');
+            }
+        }
+        
+        function updateUI() {
+            document.getElementById('spells').textContent = Math.floor(gameState.spells);
+            document.getElementById('spellsPerSecond').textContent = gameState.spellsPerSecond.toFixed(1);
+            document.getElementById('clickPower').textContent = gameState.wand.multiplier * (gameState.upgrades.cloak.count > 0 ? gameState.upgrades.cloak.effect : 1);
+            
+            // Обновляем счетчики улучшений
+            for (const type in gameState.upgrades) {
+                document.getElementById(`${type}-count`).textContent = gameState.upgrades[type].count;
+                const buttons = document.querySelectorAll(`[onclick="buyUpgrade('${type}', ${cost}, ${effect})"]`);
+                buttons.forEach(button => {
+                    button.textContent = `Купить (${gameState.upgrades[type].cost})`;
+                    button.disabled = gameState.spells < gameState.upgrades[type].cost;
+                });
+            }
+            
+            // Обновляем кнопки заклинаний
+            document.querySelectorAll('.spell-button').forEach(button => {
+                const spellName = button.textContent.split(' (')[0];
+                const cost = parseInt(button.textContent.match(/\((\d+)\)/)[1]);
+                
+                button.disabled = gameState.spells < cost || gameState.learnedSpells.includes(spellName);
+            });
+        }
+        
+        function openTab(tabId) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Деактивируем все кнопки вкладок
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Показываем выбранную вкладку
+            document.getElementById(tabId).classList.add('active');
+            
+            // Активируем кнопку
+            event.currentTarget.classList.add('active');
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('save-notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Сохранение и загрузка игры
+        function saveGame() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.CloudStorage.setItem('gameState', JSON.stringify(gameState));
+            } else {
+                localStorage.setItem('harryPotterClicker', JSON.stringify(gameState));
+            }
+            showNotification('Прогресс сохранен!');
+        }
+        
+        function loadGame() {
+            const loadFromStorage = (data) => {
+                if (data) {
+                    try {
+                        const savedState = JSON.parse(data);
+                        if (savedState) {
+                            gameState = {
+                                ...gameState,
+                                ...savedState,
+                                // Сохраняем ссылки на функции объектов
+                                upgrades: {
+                                    ...gameState.upgrades,
+                                    ...(savedState.upgrades || {})
+                                },
+                                wand: {
+                                    ...gameState.wand,
+                                    ...(savedState.wand || {})
+                                }
+                            };
+                            
+                            // Обновляем изображение палочки
+                            if (gameState.wand.image) {
+                                document.getElementById('magic-wand').style.backgroundImage = `url('${gameState.wand.image}')`;
+                            }
+                            
+                            showNotification('Прогресс загружен!');
+                        }
+                    } catch (e) {
+                        console.error('Ошибка загрузки:', e);
+                    }
+                }
+            };
+            
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.CloudStorage.getItem('gameState', loadFromStorage);
+            } else {
+                loadFromStorage(localStorage.getItem('harryPotterClicker'));
+            }
+        }
+        
+        // Запуск игры при загрузке страницы
+        window.onload = initGame;
+        // Сохраняем при закрытии страницы
+        window.onbeforeunload = saveGame;
+    </script>
 </body>
 </html>
