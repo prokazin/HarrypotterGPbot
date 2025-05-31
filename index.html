@@ -2,30 +2,31 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Волшебный Кликер Хогвартса</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Хогвартс: Волшебный Кликер</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Хогвартс: Волшебный Кликер</h1>
-
-  <div id="quiz-container">
-    <h2>Выберите ответы, чтобы получить палочку:</h2>
+  <div id="test" class="visible">
+    <h1>Какую палочку ты получишь?</h1>
     <div id="question"></div>
     <div id="answers"></div>
-    <button id="next-btn">Далее</button>
   </div>
 
-  <div id="game-container" style="display: none;">
-    <h2 id="counter">Галлеонов: 0</h2>
-    <div id="wand" title="Кликни на палочку!"></div>
-
-    <div id="shop">
-      <h3>Магазин</h3>
-      <button onclick="buyUpgrade('wand')">Палочка Оливандера (+1 за клик) — 50 галлеонов</button>
-    </div>
+  <div id="game" class="hidden">
+    <h1>Хогвартс: Волшебный Кликер</h1>
+    <div id="counter">Галлеонов: 0</div>
+    <div id="wand"></div>
+    <button id="btn-upgrades">Улучшения</button>
+    <button id="btn-reset">Сброс</button>
   </div>
 
-  <script src="main.js"></script>
+  <div id="upgrades" class="hidden">
+    <h2>Улучшения</h2>
+    <div id="upgrade-list"></div>
+    <button id="btn-back">Назад</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
