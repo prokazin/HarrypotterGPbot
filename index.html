@@ -2,12 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Хогвартс</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: url('images/background.jpeg') no-repeat center center fixed;
+      background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       text-align: center;
@@ -15,27 +15,15 @@
       user-select: none;
       margin: 0;
     }
-    h1, h2 {
-      text-shadow: 2px 2px 4px #000;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    #counter {
-      font-size: 24px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
+    h1, h2 { text-shadow: 2px 2px 4px #000; }
+    #counter { font-size: 24px; margin-bottom: 20px; font-weight: bold; }
     #wand {
       width: 150px;
       cursor: pointer;
       transition: transform 0.1s ease;
       user-select: none;
     }
-    #wand:active {
-      transform: scale(1.1) rotate(-5deg);
-    }
+    #wand:active { transform: scale(1.1) rotate(-5deg); }
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -47,9 +35,7 @@
       cursor: pointer;
       user-select: none;
     }
-    button:hover {
-      background-color: #7b68ee;
-    }
+    button:hover { background-color: #7b68ee; }
   </style>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -57,34 +43,35 @@
   <h1>🏰 Хогвартс</h1>
   <div id="counter">Галлеонов: 0</div>
 
-  <!-- Кликабельная палочка -->
   <img src="images/wand.png" id="wand" alt="Волшебная палочка" />
 
-  <h2>🔮 Апгрейды</h2>
-  <div id="shop">
-    <button onclick="buyUpgrade('wand')">Палочка Оливандера (+1/клик) – 50</button>
+  <button onclick="toggleShop()">🛠 Улучшения</button>
+
+  <div id="shop" style="display: none;">
+    <h2>🔮 Улучшения</h2>
+    <button onclick="buyUpgrade('cloak')">Мантия-невидимка (+2/клик) – 100</button>
+    <button onclick="buyUpgrade('firebolt')">Огненная молния (+5/клик) – 300</button>
   </div>
 
   <script>
     let gold = 0;
     let clickPower = 1;
 
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
-
     const counterEl = document.getElementById("counter");
     const wandImg = document.getElementById("wand");
+
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
 
     async function loadProgress() {
       try {
         const keys = ['gold', 'clickPower'];
         const result = await Telegram.WebApp.CloudStorage.getItems(keys);
-
         gold = parseInt(result.gold || '0', 10);
         clickPower = parseInt(result.clickPower || '1', 10);
         updateCounter();
       } catch (e) {
-        console.error('Ошибка при загрузке из CloudStorage', e);
+        console.error('Ошибка при загрузке', e);
       }
     }
 
@@ -95,7 +82,7 @@
           clickPower: clickPower.toString()
         });
       } catch (e) {
-        console.error('Ошибка при сохранении в CloudStorage', e);
+        console.error('Ошибка при сохранении', e);
       }
     }
 
@@ -103,21 +90,34 @@
       counterEl.textContent = `Галлеонов: ${gold}`;
     }
 
-    wandImg.addEventListener("click", () => {
-      gold += clickPower;
-      updateCounter();
-      saveProgress();
-    });
-
-    function buyUpgrade(type) {
-      if (type === 'wand' && gold >= 50) {
-        gold -= 50;
-        clickPower += 1;
+    if (wandImg) {
+      wandImg.addEventListener("click", () => {
+        gold += clickPower;
         updateCounter();
         saveProgress();
-        alert("Вы купили Палочку Оливандера! +1 к галлеонам за клик.");
-      } else if (type === 'wand') {
-        alert("Недостаточно галлеонов для покупки.");
+      });
+    }
+
+    function toggleShop() {
+      const shop = document.getElementById("shop");
+      shop.style.display = shop.style.display === "none" ? "block" : "none";
+    }
+
+    function buyUpgrade(type) {
+      if (type === 'cloak' && gold >= 100) {
+        gold -= 100;
+        clickPower += 2;
+        updateCounter();
+        saveProgress();
+        alert("Вы купили Мантию-невидимку!");
+      } else if (type === 'firebolt' && gold >= 300) {
+        gold -= 300;
+        clickPower += 5;
+        updateCounter();
+        saveProgress();
+        alert("Вы купили Огненную молнию!");
+      } else {
+        alert("Недостаточно галлеонов.");
       }
     }
 
