@@ -2,13 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Хогвартс</title>
-  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'IM Fell English SC', serif;
-      background: url('images/background.jpeg') no-repeat center center fixed;
+      background: url('images/background.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       text-align: center;
@@ -18,6 +18,7 @@
       flex-direction: column;
       height: 100vh;
       justify-content: space-between;
+      user-select: none;
     }
     h1, h2 {
       text-shadow: 2px 2px 4px #000;
@@ -38,6 +39,15 @@
     #wand:active {
       transform: scale(1.1) rotate(-5deg);
     }
+    /* Мерцание палочки */
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 0 white); }
+      50% { filter: drop-shadow(0 0 10px #ffd700); }
+    }
+    #wand.glow {
+      animation: glow 0.6s ease-in-out;
+    }
+
     #bottom-panel {
       padding: 20px;
     }
@@ -52,8 +62,61 @@
       cursor: pointer;
       user-select: none;
       font-family: 'IM Fell English SC', serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     button:hover {
+      background-color: #7b68ee;
+    }
+    #shop {
+      margin-top: 10px;
+    }
+    /* Прогрессбар */
+    #progress-container {
+      width: 80%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 10px auto 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #ffd700;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+    /* Таблица лидеров - модальное окно */
+    #leaderboard-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #ffd700;
+      border-radius: 15px;
+      padding: 20px;
+      width: 300px;
+      max-width: 90vw;
+      color: #ffd700;
+      display: none;
+      z-index: 1000;
+      font-size: 18px;
+    }
+    #leaderboard-modal h2 {
+      margin-top: 0;
+    }
+    #leaderboard-close {
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: #6a5acd;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-family: 'IM Fell English SC', serif;
+    }
+    #leaderboard-close:hover {
       background-color: #7b68ee;
     }
   </style>
@@ -64,22 +127,35 @@
     <h1>🏰 Хогвартс</h1>
     <div id="counter">Галлеонов: 0</div>
     <img src="images/wand.png" id="wand" alt="Волшебная палочка" />
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
   </div>
 
   <div id="bottom-panel">
     <button onclick="toggleShop()">🛠 Улучшения</button>
+    <button onclick="showLeaderboard()">📋 Таблица лидеров</button>
     <div id="shop" style="display: none;">
       <h2>🔮 Улучшения</h2>
-      <button onclick="buyUpgrade('cloak')">Мантия-невидимка (+2/клик) – 100</button>
-      <button onclick="buyUpgrade('firebolt')">Огненная молния (+5/клик) – 300</button>
+      <button id="upgrade-cloak" onclick="buyUpgrade('cloak')">Мантия-невидимка (+2/клик) – 100</button>
+      <button id="upgrade-firebolt" onclick="buyUpgrade('firebolt')">Огненная молния (+5/клик) – 300</button>
     </div>
+  </div>
+
+  <div id="leaderboard-modal">
+    <h2>Таблица лидеров</h2>
+    <p>Здесь будет таблица лидеров (пока заглушка).</p>
+    <button id="leaderboard-close" onclick="hideLeaderboard()">Закрыть</button>
   </div>
 
   <script>
     let gold = 0;
     let clickPower = 1;
+    const maxGoldForProgress = 1000;
+
     const counterEl = document.getElementById("counter");
     const wandImg = document.getElementById("wand");
+    const progressBar = document.getElementById("progress-bar");
 
     Telegram.WebApp.ready();
     Telegram.WebApp.expand();
@@ -91,6 +167,8 @@
         gold = parseInt(result.gold || '0', 10);
         clickPower = parseInt(result.clickPower || '1', 10);
         updateCounter();
+        updateWandImage();
+        updateProgressBar();
       } catch (e) {
         console.error('Ошибка при загрузке', e);
       }
@@ -111,11 +189,36 @@
       counterEl.textContent = `Галлеонов: ${gold}`;
     }
 
+    function updateProgressBar() {
+      const progress = Math.min((gold / maxGoldForProgress) * 100, 100);
+      progressBar.style.width = progress + '%';
+    }
+
+    function updateWandImage() {
+      if (clickPower >= 10) {
+        wandImg.src = 'images/wand_fire.png';
+      } else if (clickPower >= 5) {
+        wandImg.src = 'images/wand_magic.png';
+      } else {
+        wandImg.src = 'images/wand.png';
+      }
+    }
+
+    function glowEffect() {
+      wandImg.classList.add('glow');
+      setTimeout(() => {
+        wandImg.classList.remove('glow');
+      }, 600);
+    }
+
     if (wandImg) {
       wandImg.addEventListener("click", () => {
         gold += clickPower;
         updateCounter();
+        updateProgressBar();
+        glowEffect();
         saveProgress();
+        updateWandImage();
       });
     }
 
@@ -125,21 +228,49 @@
     }
 
     function buyUpgrade(type) {
-      if (type === 'cloak' && gold >= 100) {
-        gold -= 100;
-        clickPower += 2;
+      let cost, powerIncrease, buttonId;
+      if (type === 'cloak') {
+        cost = 100;
+        powerIncrease = 2;
+        buttonId = 'upgrade-cloak';
+      } else if (type === 'firebolt') {
+        cost = 300;
+        powerIncrease = 5;
+        buttonId = 'upgrade-firebolt';
+      } else {
+        return;
+      }
+
+      if (gold >= cost) {
+        gold -= cost;
+        clickPower += powerIncrease;
         updateCounter();
+        updateProgressBar();
         saveProgress();
-        alert("Вы купили Мантию-невидимку!");
-      } else if (type === 'firebolt' && gold >= 300) {
-        gold -= 300;
-        clickPower += 5;
-        updateCounter();
-        saveProgress();
-        alert("Вы купили Огненную молнию!");
+        updateWandImage();
+
+        // Подсветка кнопки покупки
+        const btn = document.getElementById(buttonId);
+        if (btn) {
+          btn.style.backgroundColor = '#ffd700';
+          setTimeout(() => {
+            btn.style.backgroundColor = '';
+          }, 500);
+        }
+
+        alert(`Вы купили улучшение: ${btn.textContent.split('–')[0].trim()}!`);
       } else {
         alert("Недостаточно галлеонов.");
       }
+    }
+
+    // Таблица лидеров — пока заглушка
+    const leaderboardModal = document.getElementById('leaderboard-modal');
+    function showLeaderboard() {
+      leaderboardModal.style.display = 'block';
+    }
+    function hideLeaderboard() {
+      leaderboardModal.style.display = 'none';
     }
 
     loadProgress();
