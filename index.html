@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Волшебный Кликер Хогвартса</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -10,10 +10,9 @@
 <body>
   <h1>Хогвартс: Волшебный Кликер</h1>
   <div id="counter">Галлеонов: 0</div>
-  <img id="wand" src="https://github.com/prokazin/HarrypotterGPbot/raw/main/images/wand.png.png" alt="Палочка" />
-  <div id="shop">
-    <button onclick="buyUpgrade()">Купить усиление (50 галлеонов)</button>
-  </div>
+  <div id="wand" class="wand"></div>
+  <button onclick="buyUpgrade('wand')">Купить Палочку Оливандера (50 галлеонов)</button>
+
   <script src="main.js"></script>
 </body>
 </html>
