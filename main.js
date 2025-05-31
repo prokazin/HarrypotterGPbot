@@ -10,7 +10,7 @@ const counterEl = document.getElementById("counter");
 const wandEl = document.getElementById("wand");
 
 // Устанавливаем картинку палочки
-wandEl.style.backgroundImage = `url('images/wand-${selectedWand}.png.png')`;
+wandEl.style.backgroundImage = `url('images/wand.png.png')`;
 
 function updateCounter() {
   counterEl.textContent = `Галлеонов: ${gold}`;
