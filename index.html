@@ -2,208 +2,181 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Хогвартс</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Хогвартс: Магический Кликер</title>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'IM Fell English SC', serif;
-      background: url('images/background.gpeg') no-repeat center center fixed;
+      background: url('images/background.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       text-align: center;
-      padding: 0;
+      padding: 20px;
       margin: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      justify-content: space-between;
       user-select: none;
     }
     h1, h2 {
       text-shadow: 2px 2px 4px #000;
-      margin-top: 20px;
-    }
-    #counter {
-      font-size: 24px;
-      margin: 10px 0;
-      font-weight: bold;
     }
     #wand {
       width: 150px;
       cursor: pointer;
-      transition: transform 0.1s ease;
+      transition: transform 0.1s ease, filter 0.2s ease;
       user-select: none;
-      margin: 10px auto;
+      margin-top: 20px;
     }
     #wand:active {
       transform: scale(1.1) rotate(-5deg);
+      filter: brightness(1.5);
     }
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 0 white); }
-      50% { filter: drop-shadow(0 0 10px #ffd700); }
+    #counter {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
     }
-    #wand.glow {
-      animation: glow 0.6s ease-in-out;
+    #progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
     }
-    button {
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: gold;
+      transition: width 0.3s ease;
+    }
+    .button {
       padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      background-color: #6a5acd;
+      font-size: 18px;
+      margin: 5px;
+      background: #6a5acd;
       border: none;
       border-radius: 10px;
       color: white;
       cursor: pointer;
-      user-select: none;
-      font-family: 'IM Fell English SC', serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
-    button:hover {
-      background-color: #7b68ee;
+    .button:hover {
+      background: #7b68ee;
     }
-    #progress-container {
-      width: 80%;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 10px auto 20px;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    #progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #ffd700;
-      border-radius: 10px;
-      transition: width 0.4s ease;
-    }
-    #bottom-panel {
+    #test-container {
+      background: rgba(0,0,0,0.8);
       padding: 20px;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: 20px auto;
     }
-    .panel {
-      display: none;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      margin: 10px auto;
+    .option {
+      display: block;
+      margin: 10px 0;
       padding: 10px;
-      width: 90%;
-      max-width: 400px;
+      background: #444;
+      border-radius: 8px;
+      cursor: pointer;
     }
-    .active {
-      display: block !important;
+    .option:hover {
+      background: #666;
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>🏰 Хогвартс</h1>
-    <div id="counter">Галлеонов: 0</div>
-    <img src="images/wand.png" id="wand" alt="Волшебная палочка" />
-    <div id="progress-container">
-      <div id="progress-bar"></div>
-    </div>
-  </div>
-  <div id="bottom-panel">
-    <button onclick="togglePanel('shop')">🛠 Улучшения</button>
-    <button onclick="togglePanel('leaderboard')">📋 Таблица лидеров</button>
-    <div id="shop" class="panel">
-      <h2>🔮 Улучшения</h2>
-      <div id="upgrades"></div>
-    </div>
-    <div id="leaderboard" class="panel">
-      <h2>🏆 Таблица лидеров</h2>
-      <p>Заглушка. Скоро будет!</p>
-    </div>
-  </div>
-  <script>
-    let gold = 0;
-    let clickPower = 1;
-    const maxGoldForProgress = 1000;
-    const counter = document.getElementById('counter');
-    const wand = document.getElementById('wand');
-    const progressBar = document.getElementById('progress-bar');
-    const upgradesDiv = document.getElementById('upgrades');
-    let upgrades = [
-      { id: 'cloak', name: 'Мантия-невидимка', power: 2, basePrice: 100 },
-      { id: 'broom', name: 'Огненная молния', power: 5, basePrice: 300 }
-    ];
-    function loadProgress() {
-      gold = parseInt(localStorage.getItem('gold')) || 0;
-      clickPower = parseInt(localStorage.getItem('clickPower')) || 1;
-      upgrades.forEach(upg => {
-        const saved = localStorage.getItem(`upgrade_${upg.id}`);
-        upg.price = saved ? parseInt(saved) : upg.basePrice;
-      });
-      updateCounter();
-      updateProgressBar();
-      updateWandImage();
-      renderUpgrades();
-    }
-    function saveProgress() {
-      localStorage.setItem('gold', gold);
-      localStorage.setItem('clickPower', clickPower);
-      upgrades.forEach(upg => {
-        localStorage.setItem(`upgrade_${upg.id}`, upg.price);
-      });
-    }
-    function updateCounter() {
-      counter.textContent = `Галлеонов: ${gold}`;
-    }
-    function updateProgressBar() {
-      const percent = Math.min(gold / maxGoldForProgress * 100, 100);
-      progressBar.style.width = percent + '%';
-    }
-    function updateWandImage() {
-      if (clickPower >= 10) {
-        wand.src = 'images/wand_fire.png';
-      } else if (clickPower >= 5) {
-        wand.src = 'images/wand_magic.png';
-      } else {
-        wand.src = 'images/wand.png';
-      }
-    }
-    function glowEffect() {
-      wand.classList.add('glow');
-      setTimeout(() => wand.classList.remove('glow'), 600);
-    }
-    wand.addEventListener('click', () => {
-      gold += clickPower;
-      updateCounter();
-      updateProgressBar();
-      glowEffect();
-      saveProgress();
-    });
-    function buyUpgrade(id) {
-      const upg = upgrades.find(u => u.id === id);
-      if (!upg) return;
-      if (gold >= upg.price) {
-        gold -= upg.price;
-        clickPower += upg.power;
-        upg.price = Math.floor(upg.price * 1.5);
-        updateCounter();
-        updateProgressBar();
-        updateWandImage();
-        saveProgress();
-        renderUpgrades();
-      } else {
-        alert('Недостаточно галлеонов!');
-      }
-    }
-    function renderUpgrades() {
-      upgradesDiv.innerHTML = '';
-      upgrades.forEach(upg => {
-        const btn = document.createElement('button');
-        btn.textContent = `${upg.name} (+${upg.power}/клик) — ${upg.price}`;
-        btn.onclick = () => buyUpgrade(upg.id);
-        upgradesDiv.appendChild(btn);
-      });
-    }
-    function togglePanel(id) {
-      document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
-      const selected = document.getElementById(id);
-      selected.classList.add('active');
-    }
-    loadProgress();
-  </script>
+
+<h1>Хогвартс: Магический Кликер</h1>
+
+<div id="test-container"></div>
+
+<div id="game" style="display:none;">
+  <div id="wand-name"></div>
+  <img id="wand" src="images/wand_placeholder.png" alt="Ваша палочка" />
+  <div id="counter">Галлеонов: 0</div>
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+</div>
+
+<script>
+const wandList = [
+  { id: 'elder', name: 'Бузинная палочка', image: 'images/wand_elder.png' },
+  { id: 'holly', name: 'Остролист Гарри Поттера', image: 'images/wand_holly.png' },
+  { id: 'phoenix', name: 'Палочка с пером феникса', image: 'images/wand_phoenix.png' },
+  { id: 'dragon', name: 'Драконье сердце', image: 'images/wand_dragon.png' },
+  { id: 'unicorn', name: 'Волос единорога', image: 'images/wand_unicorn.png' },
+  { id: 'willow', name: 'Плакучая ива', image: 'images/wand_willow.png' },
+  { id: 'vine', name: 'Виноградная лоза', image: 'images/wand_vine.png' },
+  { id: 'oak', name: 'Дубовая палочка', image: 'images/wand_oak.png' },
+  { id: 'hazel', name: 'Лещина', image: 'images/wand_hazel.png' },
+  { id: 'mahogany', name: 'Махагоновая палочка', image: 'images/wand_mahogany.png' }
+];
+
+const questions = [
+  { q: "Какая ваша главная черта?", options: ["Мужество", "Мудрость", "Доброта", "Амбиции"] },
+  { q: "Какой магический зверь вам ближе?", options: ["Дракон", "Единорог", "Феникс", "Гиппогриф"] },
+  { q: "Какую магию вы бы изучали в первую очередь?", options: ["Защиту", "Заклинания", "Зелья", "Тёмные искусства"] },
+  { q: "Что вы цените больше всего?", options: ["Справедливость", "Мудрость", "Верность", "Сила"] },
+  { q: "В каком факультете вы бы учились?", options: ["Гриффиндор", "Когтевран", "Пуффендуй", "Слизерин"] }
+];
+
+let answers = [];
+let currentQuestion = 0;
+const testContainer = document.getElementById("test-container");
+const game = document.getElementById("game");
+const wandImage = document.getElementById("wand");
+const wandName = document.getElementById("wand-name");
+const counter = document.getElementById("counter");
+const progressFill = document.getElementById("progress-fill");
+let gold = 0;
+
+function showQuestion() {
+  if (currentQuestion >= questions.length) {
+    finishTest();
+    return;
+  }
+  const q = questions[currentQuestion];
+  let html = `<h2>${q.q}</h2>`;
+  q.options.forEach(opt => {
+    html += `<div class="option" onclick="selectAnswer('${opt}')">${opt}</div>`;
+  });
+  testContainer.innerHTML = html;
+}
+
+function selectAnswer(answer) {
+  answers.push(answer);
+  currentQuestion++;
+  showQuestion();
+}
+
+function finishTest() {
+  const index = Math.floor(Math.random() * wandList.length);
+  const selectedWand = wandList[index];
+  localStorage.setItem('wandId', selectedWand.id);
+  startGame(selectedWand);
+}
+
+function startGame(wand) {
+  testContainer.style.display = "none";
+  game.style.display = "block";
+  wandImage.src = wand.image;
+  wandName.textContent = "Ваша палочка: " + wand.name;
+  wandImage.addEventListener('click', () => {
+    gold += 1;
+    counter.textContent = "Галлеонов: " + gold;
+    progressFill.style.width = Math.min(100, gold) + "%";
+    localStorage.setItem('gold', gold);
+  });
+}
+
+window.onload = () => {
+  const savedWandId = localStorage.getItem('wandId');
+  if (savedWandId) {
+    const wand = wandList.find(w => w.id === savedWandId);
+    startGame(wand);
+    gold = parseInt(localStorage.getItem('gold')) || 0;
+    counter.textContent = "Галлеонов: " + gold;
+    progressFill.style.width = Math.min(100, gold) + "%";
+  } else {
+    showQuestion();
+  }
+}
+</script>
+
 </body>
 </html>
