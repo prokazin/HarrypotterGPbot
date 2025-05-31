@@ -1,340 +1,310 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Harry Potter Wand Clicker</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Cinzel', serif;
-    background: url('images/background.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-  }
-  #container {
-    background: rgba(0,0,0,0.7);
-    max-width: 600px;
-    width: 100%;
-    padding: 20px 30px 30px 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #000a;
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 3rem;
-    text-shadow: 2px 2px 6px #000;
-  }
-  /* Тест */
-  #test {
-    display: block;
-  }
-  #test h2 {
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  #test div.question {
-    margin-bottom: 18px;
-  }
-  label {
-    display: block;
-    margin: 6px 0;
-    cursor: pointer;
-  }
-  input[type="radio"] {
-    margin-right: 8px;
-  }
-  button {
-    background: #7b68ee;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    padding: 10px 25px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    display: block;
-    margin: 20px auto 0 auto;
-    transition: background 0.3s;
-    user-select: none;
-  }
-  button:hover {
-    background: #9a87ff;
-  }
-
-  /* Игра */
-  #gameArea {
-    display: none;
-  }
-  #clickCounter {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 15px;
-    text-shadow: 1px 1px 2px #000;
-  }
-  #wandImg {
-    display: block;
-    margin: 0 auto 20px auto;
-    width: 180px;
-    cursor: pointer;
-    transition: transform 0.15s ease;
-  }
-  #wandImg:active {
-    transform: scale(1.1) rotate(-10deg);
-  }
-
-  nav {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  .tab-btn {
-    background: rgba(255,255,255,0.1);
-    border: 2px solid #7b68ee;
-    color: white;
-    font-weight: 700;
-    padding: 8px 16px;
-    margin: 0 8px;
-    border-radius: 10px 10px 0 0;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
-    user-select: none;
-  }
-  .tab-btn.active {
-    background: #7b68ee;
-    color: #fff;
-    border-color: #9a87ff;
-  }
-  .tab-content {
-    background: rgba(0,0,0,0.5);
-    border-radius: 0 10px 10px 10px;
-    padding: 15px 20px;
-    min-height: 200px;
-    color: #ddd;
-  }
-  .tab-content > div {
-    margin-bottom: 15px;
-  }
-
-  /* Улучшения */
-  #upgradesList div {
-    border-bottom: 1px solid #555;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-  }
-  #upgradesList button {
-    background: #5a43b6;
-    font-size: 1rem;
-    padding: 6px 12px;
-  }
-  #upgradesList button:hover {
-    background: #7b68ee;
-  }
-
-  /* Рейтинг */
-  #leaderboardList {
-    list-style: none;
-    padding-left: 0;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  #leaderboardList li {
-    border-bottom: 1px solid #444;
-    padding: 8px 0;
-    font-weight: 600;
-  }
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harry Potter Wand Clicker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+    body {
+      font-family: 'MedievalSharp', cursive, Arial, sans-serif;
+      background: url('images/background.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      user-select: none;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1, h2 {
+      text-shadow: 2px 2px 4px #000;
+      margin-bottom: 10px;
+    }
+    #counter {
+      font-size: 24px;
+      margin: 20px 0;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+    }
+    #wand {
+      width: 150px;
+      cursor: pointer;
+      user-select: none;
+      /* Убрана анимация нажатия */
+      /* transition: transform 0.1s ease; */
+    }
+    /*
+    #wand:active {
+      transform: scale(1.1) rotate(-5deg);
+    }
+    */
+    #tabs {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background-color: #6a5acd;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+      transition: background-color 0.3s ease;
+    }
+    .tab:hover, .tab.active {
+      background-color: #7b68ee;
+    }
+    .tab-content {
+      display: none;
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    button.upgrade-btn {
+      width: 100%;
+      margin: 8px 0;
+      padding: 8px;
+      background-color: #483d8b;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.upgrade-btn:hover {
+      background-color: #5a4fcf;
+    }
+    #leaderboardList {
+      list-style: none;
+      padding-left: 10px;
+      font-size: 18px;
+    }
+    #leaderboardList li {
+      margin: 5px 0;
+      text-shadow: 1px 1px 2px #000;
+    }
+    form label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+    form input[type="radio"] {
+      margin-right: 6px;
+      cursor: pointer;
+    }
+    form button {
+      margin-top: 12px;
+      padding: 8px 15px;
+      background-color: #6a5acd;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+    form button:hover {
+      background-color: #7b68ee;
+    }
+  </style>
 </head>
 <body>
-<div id="container">
-  <h1>Хогвартс: Выбери свою палочку</h1>
 
-  <div id="test">
-    <h2>Пройди тест и получи палочку</h2>
+  <h1>Хогвартс: Игра с волшебной палочкой</h1>
+
+  <!-- Тест выбора палочки -->
+  <div id="testDiv">
+    <h2>Пройди тест и получи свою палочку!</h2>
     <form id="testForm">
-      <div class="question">
-        <p>1. Какое твое любимое занятие?</p>
-        <label><input type="radio" name="q1" value="harry" required> Спасать друзей</label>
-        <label><input type="radio" name="q1" value="hermione"> Читать книги</label>
-        <label><input type="radio" name="q1" value="ron"> Играть в квиддич</label>
-        <label><input type="radio" name="q1" value="luna"> Размышлять о странностях</label>
-      </div>
-      <div class="question">
-        <p>2. Какой ты по характеру?</p>
-        <label><input type="radio" name="q2" value="harry" required> Смелый и решительный</label>
-        <label><input type="radio" name="q2" value="hermione"> Умный и усердный</label>
-        <label><input type="radio" name="q2" value="ron"> Верный и дружелюбный</label>
-        <label><input type="radio" name="q2" value="luna"> Мечтательный и креативный</label>
-      </div>
-      <div class="question">
-        <p>3. Какое твое любимое место в Хогвартсе?</p>
-        <label><input type="radio" name="q3" value="hermione" required> Библиотека</label>
-        <label><input type="radio" name="q3" value="ron"> Гриффиндорская общая комната</label>
-        <label><input type="radio" name="q3" value="harry"> Квиддичное поле</label>
-        <label><input type="radio" name="q3" value="luna"> Запретный лес</label>
-      </div>
-      <div class="question">
-        <p>4. Какое качество для тебя главное?</p>
-        <label><input type="radio" name="q4" value="hermione" required> Интеллект</label>
-        <label><input type="radio" name="q4" value="harry"> Смелость</label>
-        <label><input type="radio" name="q4" value="ron"> Верность</label>
-        <label><input type="radio" name="q4" value="luna"> Оригинальность</label>
-      </div>
-      <div class="question">
-        <p>5. Твой любимый цвет?</p>
-        <label><input type="radio" name="q5" value="ron" required> Красный</label>
-        <label><input type="radio" name="q5" value="harry"> Зеленый</label>
-        <label><input type="radio" name="q5" value="hermione"> Желтый</label>
-        <label><input type="radio" name="q5" value="luna"> Фиолетовый</label>
-      </div>
+      <label>1. Твое любимое занятие в Хогвартсе?</label>
+      <input type="radio" name="q1" value="harry" required> Борьба с тёмными силами<br />
+      <input type="radio" name="q1" value="hermione"> Учёба и чтение книг<br />
+      <input type="radio" name="q1" value="ron"> Веселиться с друзьями<br />
+      <input type="radio" name="q1" value="luna"> Изучать магию и природу<br />
+
+      <label>2. Твоя любимая черта характера?</label>
+      <input type="radio" name="q2" value="harry" required> Мужество<br />
+      <input type="radio" name="q2" value="hermione"> Ум и сообразительность<br />
+      <input type="radio" name="q2" value="ron"> Верность<br />
+      <input type="radio" name="q2" value="luna"> Оригинальность<br />
+
+      <label>3. Как ты решаешь проблему?</label>
+      <input type="radio" name="q3" value="harry" required> Прямо и смело<br />
+      <input type="radio" name="q3" value="hermione"> Анализирую и ищу знания<br />
+      <input type="radio" name="q3" value="ron"> Обсуждаю с друзьями<br />
+      <input type="radio" name="q3" value="luna"> Ищу нестандартные решения<br />
+
+      <label>4. Твой любимый предмет?</label>
+      <input type="radio" name="q4" value="harry" required> Защита от тёмных искусств<br />
+      <input type="radio" name="q4" value="hermione"> Заклинания<br />
+      <input type="radio" name="q4" value="ron"> Травология<br />
+      <input type="radio" name="q4" value="luna"> Зельеварение<br />
+
+      <label>5. Что ты выберешь в трудной ситуации?</label>
+      <input type="radio" name="q5" value="harry" required> Быть лидером<br />
+      <input type="radio" name="q5" value="hermione"> Подготовиться заранее<br />
+      <input type="radio" name="q5" value="ron"> Полагаться на друзей<br />
+      <input type="radio" name="q5" value="luna"> Действовать по интуиции<br />
+
       <button type="submit">Получить палочку</button>
     </form>
   </div>
 
-  <div id="gameArea">
-    <nav>
-      <button class="tab-btn active" data-tab="playTab">Игра</button>
-      <button class="tab-btn" data-tab="upgradesTab">Улучшения</button>
-      <button class="tab-btn" data-tab="leaderboardTab">Рейтинг</button>
-    </nav>
-
-    <div id="playTab" class="tab-content active">
-      <div id="clickCounter">Галлеоны: 0</div>
-      <img id="wandImg" src="" alt="Палочка" title="Кликни по палочке, чтобы получить галлеоны" draggable="false" />
+  <!-- Игровая область -->
+  <div id="gameArea" style="display:none;">
+    <h2>Клики: <span id="counter">0</span></h2>
+    <img id="wand" src="images/harry.png" alt="Волшебная палочка" />
+    <div id="tabs">
+      <div class="tab active" data-tab="upgradesTab">Улучшения</div>
+      <div class="tab" data-tab="leaderboardTab">Рейтинг</div>
     </div>
-
-    <div id="upgradesTab" class="tab-content">
+    <div id="upgradesTab" class="tab-content active">
       <h3>Улучшения</h3>
       <div id="upgradesList"></div>
     </div>
-
     <div id="leaderboardTab" class="tab-content">
-      <h3>Локальный рейтинг (по галлеонам)</h3>
-      <ol id="leaderboardList"></ol>
+      <h3>Рейтинг лучших</h3>
+      <ul id="leaderboardList"></ul>
     </div>
   </div>
-</div>
 
 <script>
 (() => {
-  const wandImages = {
+  // Элементы
+  const testDiv = document.getElementById('testDiv');
+  const testForm = document.getElementById('testForm');
+  const gameArea = document.getElementById('gameArea');
+  const counterSpan = document.getElementById('counter');
+  const wandImg = document.getElementById('wand');
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+  const upgradesList = document.getElementById('upgradesList');
+  const leaderboardList = document.getElementById('leaderboardList');
+
+  // Переменные игры
+  let clicks = 0;
+  let clickPower = 1;
+  let selectedWand = null;
+
+  // Палочки с изображениями
+  const wands = {
     harry: 'images/harry.png',
     hermione: 'images/hermione.png',
     ron: 'images/ron.png',
     luna: 'images/luna.png'
   };
 
-  let selectedWand = null;
-  let clicks = 0;
-  let clickPower = 1;
-
-  const testDiv = document.getElementById('test');
-  const gameArea = document.getElementById('gameArea');
-  const testForm = document.getElementById('testForm');
-  const clickCounter = document.getElementById('clickCounter');
-  const wandImg = document.getElementById('wandImg');
-
-  const tabs = Array.from(document.querySelectorAll('.tab-btn'));
-  const tabContents = Array.from(document.querySelectorAll('.tab-content'));
-
-  // Апгрейды
+  // Улучшения
   const upgrades = [
-    { id: 'clickPower', name: 'Сила клика', level: 0, baseCost: 10 },
-    { id: 'autoClicker', name: 'Автокликер', level: 0, baseCost: 50 }
+    {id:'clickPower', name:'Сила клика +1', baseCost:10, level:0, cost:10, effect: () => { clickPower++; }},
+    {id:'autoClicker', name:'Автокликер (+1 в сек)', baseCost:50, level:0, cost:50, effect: null}
   ];
 
+  let autoClickerInterval = null;
+
+  // Сохранение прогресса
   function saveProgress() {
-    const data = {
-      selectedWand,
-      clicks,
-      upgrades: upgrades.map(u => ({ id: u.id, level: u.level }))
-    };
-    localStorage.setItem('hpClickerSave', JSON.stringify(data));
+    localStorage.setItem('hpClickerClicks', clicks);
+    localStorage.setItem('hpClickerClickPower', clickPower);
+    localStorage.setItem('hpClickerSelectedWand', selectedWand);
+    localStorage.setItem('hpClickerUpgrades', JSON.stringify(upgrades));
   }
 
+  // Загрузка прогресса
   function loadProgress() {
-    const saved = JSON.parse(localStorage.getItem('hpClickerSave'));
-    if(saved) {
-      selectedWand = saved.selectedWand;
-      clicks = saved.clicks || 0;
-      if(saved.upgrades) {
-        saved.upgrades.forEach(su => {
-          let up = upgrades.find(u => u.id === su.id);
-          if(up) up.level = su.level;
+    const savedClicks = parseInt(localStorage.getItem('hpClickerClicks'));
+    if(!isNaN(savedClicks)) clicks = savedClicks;
+
+    const savedPower = parseInt(localStorage.getItem('hpClickerClickPower'));
+    if(!isNaN(savedPower)) clickPower = savedPower;
+
+    const savedWand = localStorage.getItem('hpClickerSelectedWand');
+    if(savedWand && wands[savedWand]) selectedWand = savedWand;
+
+    const savedUpgrades = localStorage.getItem('hpClickerUpgrades');
+    if(savedUpgrades) {
+      try {
+        const upgs = JSON.parse(savedUpgrades);
+        upgs.forEach(su => {
+          let u = upgrades.find(up => up.id === su.id);
+          if(u) {
+            u.level = su.level;
+            u.cost = su.cost;
+          }
         });
-      }
+      } catch(e){}
     }
   }
 
+  // Обновление счетчика кликов
   function updateClicksDisplay() {
-    clickCounter.textContent = `Галлеоны: ${clicks}`;
+    counterSpan.textContent = clicks;
   }
 
+  // Обновление палочки
   function updateWandImage() {
-    if(selectedWand && wandImages[selectedWand]) {
-      wandImg.src = wandImages[selectedWand];
-      wandImg.alt = `Палочка ${selectedWand}`;
-      wandImg.title = 'Кликни по палочке, чтобы получить галлеоны';
+    if(selectedWand && wands[selectedWand]) {
+      wandImg.src = wands[selectedWand];
     }
   }
 
+  // Рендер апгрейдов
   function renderUpgrades() {
-    const upgradesList = document.getElementById('upgradesList');
     upgradesList.innerHTML = '';
     upgrades.forEach(upg => {
-      const cost = Math.floor(upg.baseCost * Math.pow(1.5, upg.level));
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <strong>${upg.name}</strong><br>
-        Уровень: ${upg.level} <br>
-        Цена: ${cost} галлеонов
-        <br>
-        <button ${clicks >= cost ? '' : 'disabled'} data-id="${upg.id}">Купить</button>
-      `;
-      upgradesList.appendChild(div);
-      div.querySelector('button').onclick = () => {
-        if(clicks >= cost) {
-          clicks -= cost;
+      const btn = document.createElement('button');
+      btn.textContent = `${upg.name} (Уровень: ${upg.level}) Цена: ${upg.cost} галлеонов`;
+      btn.className = 'upgrade-btn';
+      btn.disabled = clicks < upg.cost;
+      btn.onclick = () => {
+        if(clicks >= upg.cost) {
+          clicks -= upg.cost;
           upg.level++;
-          if(upg.id === 'clickPower') {
-            clickPower = 1 + upg.level;
-          }
+          // Увеличиваем стоимость с каждым уровнем
+          upg.cost = Math.floor(upg.baseCost * Math.pow(1.5, upg.level));
+          if(upg.effect) upg.effect();
           if(upg.id === 'autoClicker' && upg.level === 1) {
             startAutoClicker();
           }
-          saveProgress();
           updateClicksDisplay();
           renderUpgrades();
+          saveProgress();
           renderLeaderboard();
         }
       };
+      upgradesList.appendChild(btn);
     });
   }
 
-  let autoClickInterval = null;
+  // Автокликер
   function startAutoClicker() {
-    if(autoClickInterval) return;
-    autoClickInterval = setInterval(() => {
+    if(autoClickerInterval) clearInterval(autoClickerInterval);
+    autoClickerInterval = setInterval(() => {
       clicks += upgrades.find(u => u.id === 'autoClicker').level;
       updateClicksDisplay();
       saveProgress();
-      renderUpgrades();
       renderLeaderboard();
     }, 1000);
   }
 
+  // Рендер рейтинга
   function renderLeaderboard() {
-    const list = document.getElementById('leaderboardList');
     const savedLeaders = JSON.parse(localStorage.getItem('hpClickerLeaderboard') || '[]');
-    // Добавляем текущего игрок
     const playerName = 'Ты';
     let found = false;
     for(let i=0; i<savedLeaders.length; i++) {
@@ -349,21 +319,19 @@
     if(!found) {
       savedLeaders.push({name: playerName, score: clicks});
     }
-    // Сортируем по убыванию
     savedLeaders.sort((a,b) => b.score - a.score);
-    // Обрезаем до 10 лучших
     const top = savedLeaders.slice(0, 10);
     localStorage.setItem('hpClickerLeaderboard', JSON.stringify(top));
 
-    list.innerHTML = '';
+    leaderboardList.innerHTML = '';
     top.forEach((item, i) => {
       const li = document.createElement('li');
       li.textContent = `${i+1}. ${item.name}: ${item.score}`;
-      list.appendChild(li);
+      leaderboardList.appendChild(li);
     });
   }
 
-  // Обработчик переключения вкладок
+  // Переключение вкладок
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -381,6 +349,7 @@
     });
   });
 
+  // Клик по палочке
   wandImg.onclick = () => {
     clicks += clickPower;
     updateClicksDisplay();
@@ -389,16 +358,14 @@
     renderLeaderboard();
   };
 
-  // Тест
+  // Обработка теста
   testForm.onsubmit = (e) => {
     e.preventDefault();
-    // Собираем ответы и считаем самые частые
     const formData = new FormData(testForm);
     let scores = {harry: 0, hermione:0, ron:0, luna:0};
     for(const [key, value] of formData.entries()) {
       if(scores[value] !== undefined) scores[value]++;
     }
-    // Палочка с максимальным количеством
     let maxScore = 0;
     let chosen = 'harry';
     for(let k in scores) {
@@ -419,7 +386,7 @@
     saveProgress();
   };
 
-  // Загрузка прогресса
+  // Загрузка прогресса при старте
   loadProgress();
   if(selectedWand) {
     testDiv.style.display = 'none';
@@ -428,12 +395,12 @@
     updateClicksDisplay();
     renderUpgrades();
     renderLeaderboard();
-    if(upgrades.find(u=>u.id==='autoClicker').level > 0) {
+    if(upgrades.find(u => u.id === 'autoClicker' && u.level > 0)) {
       startAutoClicker();
     }
   }
-
 })();
 </script>
+
 </body>
 </html>
