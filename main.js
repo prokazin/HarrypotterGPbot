@@ -1,6 +1,6 @@
 Telegram.WebApp.ready();
 Telegram.WebApp.expand();
-tt
+
 let gold = 0;
 let clickPower = 1;
 
