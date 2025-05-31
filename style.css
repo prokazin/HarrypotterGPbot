@@ -5,6 +5,7 @@ body {
   color: #fff;
   text-align: center;
   padding: 20px;
+  margin: 0;
   user-select: none;
 }
 
@@ -12,23 +13,25 @@ h1, h2 {
   text-shadow: 2px 2px 4px #000;
 }
 
-#want, #question, #answers {
-  margin-bottom: 20px;
+#counter {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
-#wand {
+#want, #wand {
   width: 150px;
   height: 150px;
   margin: 20px auto;
+  cursor: pointer;
+  transition: transform 0.1s ease;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  cursor: pointer;
-  transition: transform 0.1s ease;
 }
 
-#wand:active {
-  transform: scale(1.1) rotate(-5deg);
+#want:active, #wand:active {
+  transform: scale(1.1);
 }
 
 button {
@@ -45,3 +48,6 @@ button {
 button:hover {
   background-color: #7b68ee;
 }
+
+.hidden { display: none; }
+.visible { display: block; }
