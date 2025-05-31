@@ -1,3 +1,4 @@
+const selectedWand = localStorage.getItem('selectedWand') || 'standard';
 let gold = 0;
 let clickPower = 1;
 
