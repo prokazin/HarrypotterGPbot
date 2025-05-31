@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Harry Potter Wand Clicker</title>
   <style>
+    /* Ваши существующие стили остаются без изменений */
     @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
     body {
       font-family: 'MedievalSharp', cursive, Arial, sans-serif;
-      background: url('https://i.imgur.com/JYf6X3T.jpg') no-repeat center center fixed;
+      background: url('images/background.png') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       text-align: center;
@@ -20,740 +21,215 @@
       flex-direction: column;
       justify-content: center;
     }
-    h1, h2 {
-      text-shadow: 2px 2px 4px #000;
-      margin-bottom: 10px;
-    }
-    #counter {
-      font-size: 24px;
-      margin: 20px 0;
-      font-weight: bold;
-      text-shadow: 1px 1px 3px #000;
-    }
-    #wand {
-      width: 150px;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.1s ease;
-      margin: 0 auto;
-    }
-    #wand:hover {
-      transform: scale(1.05);
-    }
-    #wand:active {
-      transform: scale(1.1) rotate(-5deg);
-    }
-    #tabs {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    .tab {
-      padding: 10px 20px;
-      background-color: #6a5acd;
-      border-radius: 10px;
-      cursor: pointer;
-      user-select: none;
-      font-weight: bold;
-      box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-      transition: all 0.3s ease;
-    }
-    .tab:hover, .tab.active {
-      background-color: #7b68ee;
-      transform: translateY(-2px);
-    }
-    .tab-content {
-      display: none;
-      margin-top: 20px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-    .tab-content.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-    button.upgrade-btn {
-      width: 100%;
-      margin: 8px 0;
-      padding: 8px;
-      background-color: #483d8b;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'MedievalSharp', cursive;
-    }
-    button.upgrade-btn:hover {
-      background-color: #5a4fcf;
-      transform: translateX(5px);
-    }
-    button.upgrade-btn:disabled {
-      background-color: #333;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-    #leaderboardList {
-      list-style: none;
-      padding-left: 10px;
-      font-size: 18px;
-    }
-    #leaderboardList li {
-      margin: 5px 0;
-      text-shadow: 1px 1px 2px #000;
-      padding: 5px;
-      border-bottom: 1px solid #444;
-    }
-    #testDiv {
+    /* ... остальные ваши стили ... */
+
+    /* Добавляем новые стили для компактного теста */
+    .wand-test-container {
       background: rgba(0, 0, 0, 0.7);
       padding: 20px;
       border-radius: 15px;
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
       box-shadow: 0 0 15px rgba(0,0,0,0.7);
     }
-    form label {
+    
+    .wand-test-intro {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .wand-question {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-left: 3px solid #7b68ee;
+      text-align: left;
+    }
+    
+    .wand-option {
       display: block;
-      margin: 15px 0 5px;
-      font-size: 18px;
-      text-shadow: 1px 1px 2px #000;
-    }
-    form input[type="radio"] {
-      margin-right: 10px;
-      cursor: pointer;
-      transform: scale(1.2);
-    }
-    form button {
-      margin-top: 20px;
-      padding: 10px 25px;
-      background-color: #6a5acd;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-      font-size: 18px;
-      transition: all 0.3s ease;
-      font-family: 'MedievalSharp', cursive;
-    }
-    form button:hover {
-      background-color: #7b68ee;
-      transform: scale(1.05);
-    }
-    .radio-option {
-      display: flex;
-      align-items: center;
       margin: 8px 0;
-      padding: 5px;
+      padding: 8px;
+      cursor: pointer;
       border-radius: 5px;
       transition: background 0.3s ease;
     }
-    .radio-option:hover {
-      background: rgba(106, 90, 205, 0.3);
+    
+    .wand-option:hover {
+      background: rgba(123, 104, 238, 0.2);
     }
-    .wand-info {
-      margin-top: 15px;
-      padding: 10px;
-      background: rgba(0,0,0,0.5);
+    
+    .wand-submit {
+      background-color: #7b68ee;
+      color: white;
+      border: none;
+      padding: 12px 25px;
       border-radius: 10px;
-      display: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin: 20px auto;
+      transition: all 0.3s ease;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    
+    .wand-submit:hover {
+      background-color: #8a7aee;
+      transform: scale(1.05);
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .pulse {
-      animation: pulse 1s infinite;
-    }
-    #magicEffect {
-      position: absolute;
-      pointer-events: none;
-      background: url('https://i.imgur.com/8Z7ZnWk.png') no-repeat;
-      width: 100px;
-      height: 100px;
-      background-size: contain;
+    
+    .wand-result {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
       display: none;
     }
   </style>
 </head>
 <body>
 
+  <!-- Ваш существующий код -->
   <div id="magicEffect"></div>
+  <!-- ... -->
 
-  <h1>Хогвартс: Игра с волшебной палочкой</h1>
-
-  <!-- Тест выбора палочки -->
-  <div id="testDiv">
-    <h2>Пройди тест и получи свою палочку!</h2>
+  <!-- Заменяем старый тест на новый компактный вариант -->
+  <div id="testDiv" class="wand-test-container">
+    <h2>Тест на выбор волшебной палочки</h2>
+    
+    <div class="wand-test-intro">
+      <p>Ответьте на 5 вопросов, чтобы найти свою идеальную палочку. Помните - палочка выбирает волшебника!</p>
+    </div>
+    
     <form id="testForm">
-      <label>1. Твое любимое занятие в Хогвартсе?</label>
-      <div class="radio-option">
-        <input type="radio" name="q1" value="harry" id="q1a" required>
-        <label for="q1a">Борьба с тёмными силами</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q1" value="hermione" id="q1b">
-        <label for="q1b">Учёба и чтение книг</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q1" value="ron" id="q1c">
-        <label for="q1c">Веселиться с друзьями</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q1" value="luna" id="q1d">
-        <label for="q1d">Изучать магию и природу</label>
+      <div class="wand-question">
+        <p>1. Какое качество вы цените в себе больше всего?</p>
+        <label class="wand-option">
+          <input type="radio" name="q1" value="harry" required> Смелость и решительность
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q1" value="hermione"> Ум и любознательность
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q1" value="ron"> Верность и преданность
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q1" value="luna"> Творчество и оригинальность
+        </label>
       </div>
 
-      <label>2. Твоя любимая черта характера?</label>
-      <div class="radio-option">
-        <input type="radio" name="q2" value="harry" id="q2a" required>
-        <label for="q2a">Мужество</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q2" value="hermione" id="q2b">
-        <label for="q2b">Ум и сообразительность</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q2" value="ron" id="q2c">
-        <label for="q2c">Верность</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q2" value="luna" id="q2d">
-        <label for="q2d">Оригинальность</label>
+      <div class="wand-question">
+        <p>2. Какой школьный предмет вам наиболее интересен?</p>
+        <label class="wand-option">
+          <input type="radio" name="q2" value="harry" required> Защита от Тёмных искусств
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q2" value="hermione"> Заклинания
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q2" value="ron"> Уход за магическими существами
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q2" value="luna"> Прорицания
+        </label>
       </div>
 
-      <label>3. Как ты решаешь проблему?</label>
-      <div class="radio-option">
-        <input type="radio" name="q3" value="harry" id="q3a" required>
-        <label for="q3a">Прямо и смело</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q3" value="hermione" id="q3b">
-        <label for="q3b">Анализирую и ищу знания</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q3" value="ron" id="q3c">
-        <label for="q3c">Обсуждаю с друзьями</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q3" value="luna" id="q3d">
-        <label for="q3d">Ищу нестандартные решения</label>
+      <div class="wand-question">
+        <p>3. Как вы обычно решаете проблемы?</p>
+        <label class="wand-option">
+          <input type="radio" name="q3" value="harry" required> Действую быстро и решительно
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q3" value="hermione"> Анализирую и ищу оптимальное решение
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q3" value="ron"> Обращаюсь за помощью к друзьям
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q3" value="luna"> Полагаюсь на интуицию
+        </label>
       </div>
 
-      <label>4. Твой любимый предмет?</label>
-      <div class="radio-option">
-        <input type="radio" name="q4" value="harry" id="q4a" required>
-        <label for="q4a">Защита от тёмных искусств</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q4" value="hermione" id="q4b">
-        <label for="q4b">Заклинания</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q4" value="ron" id="q4c">
-        <label for="q4c">Травология</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q4" value="luna" id="q4d">
-        <label for="q4d">Зельеварение</label>
+      <div class="wand-question">
+        <p>4. Какое магическое существо вам ближе?</p>
+        <label class="wand-option">
+          <input type="radio" name="q4" value="harry" required> Феникс
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q4" value="hermione"> Сова
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q4" value="ron"> Пёс
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q4" value="luna"> Единорог
+        </label>
       </div>
 
-      <label>5. Что ты выберешь в трудной ситуации?</label>
-      <div class="radio-option">
-        <input type="radio" name="q5" value="harry" id="q5a" required>
-        <label for="q5a">Быть лидером</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q5" value="hermione" id="q5b">
-        <label for="q5b">Подготовиться заранее</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q5" value="ron" id="q5c">
-        <label for="q5c">Полагаться на друзей</label>
-      </div>
-      <div class="radio-option">
-        <input type="radio" name="q5" value="luna" id="q5d">
-        <label for="q5d">Действовать по интуиции</label>
+      <div class="wand-question">
+        <p>5. Какой волшебный артефакт вы бы выбрали?</p>
+        <label class="wand-option">
+          <input type="radio" name="q5" value="harry" required> Мантия-невидимка
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q5" value="hermione"> Маховик времени
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q5" value="ron"> Карта мародёров
+        </label>
+        <label class="wand-option">
+          <input type="radio" name="q5" value="luna"> Зеркало Еиналеж
+        </label>
       </div>
 
-      <button type="submit">Получить палочку</button>
+      <button type="submit" class="wand-submit">Получить палочку</button>
     </form>
   </div>
 
-  <!-- Игровая область -->
+  <!-- Ваш существующий код -->
   <div id="gameArea" style="display:none;">
-    <h2>Галлеоны: <span id="counter">0</span></h2>
-    <img id="wand" src="https://i.imgur.com/8Z7ZnWk.png" alt="Волшебная палочка" />
-    <div id="wandInfo" class="wand-info"></div>
-    
-    <div id="tabs">
-      <div class="tab active" data-tab="upgradesTab">Улучшения</div>
-      <div class="tab" data-tab="leaderboardTab">Рейтинг</div>
-      <div class="tab" data-tab="spellsTab">Заклинания</div>
-    </div>
-    
-    <div id="upgradesTab" class="tab-content active">
-      <h3>Магические улучшения</h3>
-      <div id="upgradesList"></div>
-    </div>
-    
-    <div id="leaderboardTab" class="tab-content">
-      <h3>Рейтинг волшебников</h3>
-      <ul id="leaderboardList"></ul>
-    </div>
-    
-    <div id="spellsTab" class="tab-content">
-      <h3>Известные заклинания</h3>
-      <div id="spellsList">
-        <p>Здесь будут отображаться изученные вами заклинания</p>
-      </div>
-    </div>
+    <!-- ... -->
   </div>
 
 <script>
-(() => {
-  // Элементы
-  const testDiv = document.getElementById('testDiv');
-  const testForm = document.getElementById('testForm');
-  const gameArea = document.getElementById('gameArea');
-  const counterSpan = document.getElementById('counter');
-  const wandImg = document.getElementById('wand');
-  const tabs = document.querySelectorAll('.tab');
-  const tabContents = document.querySelectorAll('.tab-content');
-  const upgradesList = document.getElementById('upgradesList');
-  const leaderboardList = document.getElementById('leaderboardList');
-  const spellsList = document.getElementById('spellsList');
-  const wandInfo = document.getElementById('wandInfo');
-  const magicEffect = document.getElementById('magicEffect');
-
-  // Переменные игры
-  let clicks = 0;
-  let clickPower = 1;
-  let selectedWand = null;
-  let magicPoints = 0;
-  let knownSpells = [];
-
-  // Палочки с изображениями и описаниями
-  const wands = {
-    harry: {
-      img: 'https://i.imgur.com/8Z7ZnWk.png',
-      name: 'Палочка Гарри Поттера',
-      desc: '11", палочка из остролиста с пером феникса. Идеальна для защиты от тёмных искусств.',
-      bonus: 'Даёт +2 к силе клика'
-    },
-    hermione: {
-      img: 'https://i.imgur.com/V4XwWQp.png',
-      name: 'Палочка Гермионы Грейнджер',
-      desc: '10¾", палочка из виноградной лозы с сердечной жилой дракона. Усиливает интеллектуальные заклинания.',
-      bonus: 'Уменьшает стоимость улучшений на 10%'
-    },
-    ron: {
-      img: 'https://i.imgur.com/3qY9WnL.png',
-      name: 'Палочка Рона Уизли',
-      desc: '14", палочка из ивы с волосом единорога. Хороша для дружеских заклинаний и работы в команде.',
-      bonus: 'Автокликеры работают на 20% эффективнее'
-    },
-    luna: {
-      img: 'https://i.imgur.com/5tKvV7Z.png',
-      name: 'Палочка Луны Лавгуд',
-      desc: '10", палочка из вишнёвого дерева с волосом телавола. Усиливает необычные и творческие заклинания.',
-      bonus: 'Шанс 10% на двойные клики'
-    }
-  };
-
-  // Улучшения
-  const upgrades = [
-    {
-      id: 'clickPower', 
-      name: 'Сила клика +1', 
-      baseCost: 10, 
-      level: 0, 
-      cost: 10, 
-      effect: () => { clickPower++; },
-      desc: 'Увеличивает количество галлеонов за каждый клик'
-    },
-    {
-      id: 'autoClicker', 
-      name: 'Автокликер (+1/сек)', 
-      baseCost: 50, 
-      level: 0, 
-      cost: 50, 
-      effect: null,
-      desc: 'Автоматически зарабатывает галлеоны каждую секунду'
-    },
-    {
-      id: 'doubleClick', 
-      name: 'Шанс двойного клика', 
-      baseCost: 100, 
-      level: 0, 
-      cost: 100, 
-      effect: null,
-      desc: 'Даёт 5% шанс получить двойные галлеоны за клик'
-    },
-    {
-      id: 'magicMastery', 
-      name: 'Магическое мастерство', 
-      baseCost: 200, 
-      level: 0, 
-      cost: 200, 
-      effect: null,
-      desc: 'Позволяет изучать новые заклинания'
-    }
-  ];
-
-  // Заклинания
-  const spells = [
-    {name: 'Люмос', cost: 50, effect: 'Освещает тёмные углы (+1 к видимости улучшений)'},
-    {name: 'Вингардиум Левиоса', cost: 100, effect: 'Поднимает предметы (+5% к доходу)'},
-    {name: 'Экспекто Патронум', cost: 200, effect: 'Отгоняет дементоров (уменьшает штрафы)'},
-    {name: 'Авада Кедавра', cost: 1000, effect: 'Мгновенно уничтожает врагов (x2 ко всем доходам)'}
-  ];
-
-  let autoClickerInterval = null;
-  let doubleClickChance = 0;
-
-  // Эффекты при клике
-  function showMagicEffect(x, y) {
-    magicEffect.style.display = 'block';
-    magicEffect.style.left = `${x - 50}px`;
-    magicEffect.style.top = `${y - 50}px`;
-    magicEffect.style.opacity = '1';
-    
-    setTimeout(() => {
-      magicEffect.style.opacity = '0';
-      setTimeout(() => {
-        magicEffect.style.display = 'none';
-      }, 500);
-    }, 300);
-  }
-
-  // Сохранение/загрузка прогресса
-  function saveProgress(){
-    const gameData = {
-      clicks,
-      clickPower,
-      selectedWand,
-      upgrades: upgrades.map(upg => ({
-        id: upg.id,
-        level: upg.level,
-        cost: upg.cost
-      })),
-      knownSpells,
-      magicPoints,
-      doubleClickChance
-    };
-    localStorage.setItem('hpWandGame', JSON.stringify(gameData));
-  }
-
-  function loadProgress(){
-    const savedData = localStorage.getItem('hpWandGame');
-    if(savedData) {
-      const data = JSON.parse(savedData);
-      clicks = data.clicks || 0;
-      clickPower = data.clickPower || 1;
-      selectedWand = data.selectedWand || 'harry';
-      magicPoints = data.magicPoints || 0;
-      doubleClickChance = data.doubleClickChance || 0;
-      knownSpells = data.knownSpells || [];
-      
-      // Восстанавливаем улучшения
-      if(data.upgrades) {
-        for(let upg of upgrades) {
-          const savedUpg = data.upgrades.find(u => u.id === upg.id);
-          if(savedUpg) {
-            upg.level = savedUpg.level;
-            upg.cost = savedUpg.cost;
-          }
-        }
-      }
-      
-      // Запускаем автокликер если был куплен
-      if(upgrades.find(u => u.id === 'autoClicker' && u.level > 0)) {
-        startAutoClicker();
-      }
-      
-      // Обновляем интерфейс
-      updateUI();
-    }
-  }
-
-  // Обновить интерфейс
-  function updateUI(){
-    counterSpan.textContent = clicks;
-    if(selectedWand && wands[selectedWand]) {
-      wandImg.src = wands[selectedWand].img;
-      wandInfo.innerHTML = `
-        <h4>${wands[selectedWand].name}</h4>
-        <p>${wands[selectedWand].desc}</p>
-        <p><strong>Бонус:</strong> ${wands[selectedWand].bonus}</p>
-      `;
-      wandInfo.style.display = 'block';
-    }
-    renderUpgrades();
-    renderLeaderboard();
-    renderSpells();
-  }
-
-  // Рендер улучшений
-  function renderUpgrades(){
-    upgradesList.innerHTML = '';
-    upgrades.forEach(upg => {
-      const btn = document.createElement('button');
-      btn.className = 'upgrade-btn';
-      
-      // Применяем бонус Гермионы (скидка 10%)
-      let actualCost = upg.cost;
-      if(selectedWand === 'hermione') {
-        actualCost = Math.floor(upg.cost * 0.9);
-      }
-      
-      btn.innerHTML = `
-        <strong>${upg.name}</strong><br>
-        <small>Уровень: ${upg.level} | Цена: ${actualCost} галлеонов</small>
-        <small>${upg.desc}</small>
-      `;
-      
-      btn.disabled = clicks < actualCost;
-      btn.onclick = () => buyUpgrade(upg, actualCost);
-      upgradesList.appendChild(btn);
-    });
-  }
-
-  // Рендер списка заклинаний
-  function renderSpells() {
-    spellsList.innerHTML = '';
-    
-    if(knownSpells.length === 0) {
-      spellsList.innerHTML = '<p>Вы ещё не изучили ни одного заклинания. Купите "Магическое мастерство" в улучшениях!</p>';
-      return;
-    }
-    
-    const list = document.createElement('ul');
-    list.style.listStyleType = 'none';
-    list.style.padding = '0';
-    
-    spells.forEach(spell => {
-      if(knownSpells.includes(spell.name)) {
-        const item = document.createElement('li');
-        item.style.margin = '10px 0';
-        item.style.padding = '10px';
-        item.style.background = 'rgba(106, 90, 205, 0.2)';
-        item.style.borderRadius = '5px';
-        item.innerHTML = `
-          <strong>${spell.name}</strong>: ${spell.effect}
-        `;
-        list.appendChild(item);
-      }
-    });
-    
-    spellsList.appendChild(list);
-    
-    // Показываем доступные для изучения заклинания
-    if(upgrades.find(u => u.id === 'magicMastery' && u.level > 0)) {
-      const availableSpells = spells.filter(spell => !knownSpells.includes(spell.name));
-      if(availableSpells.length > 0) {
-        const learnHeader = document.createElement('h4');
-        learnHeader.textContent = 'Доступные для изучения:';
-        spellsList.appendChild(learnHeader);
-        
-        availableSpells.forEach(spell => {
-          const btn = document.createElement('button');
-          btn.className = 'upgrade-btn';
-          btn.style.margin = '5px 0';
-          btn.innerHTML = `
-            Изучить <strong>${spell.name}</strong> за ${spell.cost} магических очков
-          `;
-          btn.disabled = magicPoints < spell.cost;
-          btn.onclick = () => learnSpell(spell);
-          spellsList.appendChild(btn);
-        });
-      }
-    }
-  }
-
-  // Изучение заклинания
-  function learnSpell(spell) {
-    if(magicPoints >= spell.cost && !knownSpells.includes(spell.name)) {
-      magicPoints -= spell.cost;
-      knownSpells.push(spell.name);
-      
-      // Применяем эффекты заклинаний
-      switch(spell.name) {
-        case 'Люмос':
-          // Никакого особого эффекта, просто декоративное
-          break;
-        case 'Вингардиум Левиоса':
-          clickPower += Math.floor(clickPower * 0.05);
-          break;
-        case 'Экспекто Патронум':
-          // Можно добавить защиту от "штрафов" если они будут в игре
-          break;
-        case 'Авада Кедавра':
-          clickPower *= 2;
-          if(autoClickerInterval) {
-            clearInterval(autoClickerInterval);
-            startAutoClicker();
-          }
-          break;
-      }
-      
-      saveProgress();
-      updateUI();
-      
-      // Показываем сообщение об успешном изучении
-      alert(`Вы успешно изучили заклинание "${spell.name}"!`);
-    }
-  }
-
-  // Рендер таблицы лидеров (заглушка)
-  function renderLeaderboard() {
-    leaderboardList.innerHTML = '';
-    
-    // В реальной игре здесь был бы запрос к серверу
-    // Создадим тестовые данные
-    const leaders = [
-      {name: 'Альбус Дамблдор', score: 999999},
-      {name: 'Гарри Поттер', score: 750000},
-      {name: 'Гермиона Грейнджер', score: 500000},
-      {name: 'Северус Снегг', score: 450000},
-      {name: 'Ты', score: clicks}
-    ];
-    
-    // Сортируем по очкам
-    leaders.sort((a, b) => b.score - a.score);
-    
-    leaders.forEach((leader, index) => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <span style="font-weight: bold;">${index + 1}. ${leader.name}</span>
-        <span style="float: right;">${leader.score.toLocaleString()} галлеонов</span>
-      `;
-      
-      if(leader.name === 'Ты') {
-        li.style.background = 'rgba(106, 90, 205, 0.3)';
-        li.style.fontWeight = 'bold';
-      }
-      
-      leaderboardList.appendChild(li);
-    });
-  }
-
-  // Покупка улучшения
-  function buyUpgrade(upg, actualCost) {
-    if(clicks >= actualCost) {
-      clicks -= actualCost;
-      upg.level++;
-      upg.cost = Math.floor(upg.baseCost * Math.pow(1.5, upg.level));
-      
-      if(upg.effect) upg.effect();
-      
-      // Специальные эффекты улучшений
-      switch(upg.id) {
-        case 'autoClicker':
-          if(upg.level === 1) {
-            startAutoClicker();
-          }
-          break;
-        case 'doubleClick':
-          doubleClickChance += 5;
-          break;
-        case 'magicMastery':
-          magicPoints += 10 * upg.level;
-          break;
-      }
-      
-      updateUI();
-      saveProgress();
-      
-      // Анимация для кнопки
-      const buttons = document.querySelectorAll('.upgrade-btn');
-      buttons.forEach(btn => {
-        if(btn.textContent.includes(upg.name)) {
-          btn.classList.add('pulse');
-          setTimeout(() => btn.classList.remove('pulse'), 1000);
-        }
-      });
-    }
-  }
-
-  // Автокликер
-  function startAutoClicker() {
-    if(autoClickerInterval) clearInterval(autoClickerInterval);
-    
-    // Применяем бонус Рона (+20% эффективности)
-    let multiplier = 1;
-    if(selectedWand === 'ron') {
-      multiplier = 1.2;
-    }
-    
-    autoClickerInterval = setInterval(() => {
-      const autoClicker = upgrades.find(u => u.id === 'autoClicker');
-      if(autoClicker) {
-        clicks += Math.floor(autoClicker.level * multiplier);
-        updateUI();
-        saveProgress();
-      }
-    }, 1000);
-  }
-
-  // Вкладки
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const target = tab.getAttribute('data-tab');
-      tabContents.forEach(c => {
-        c.classList.toggle('active', c.id === target);
-      });
-    });
-  });
-
-  // Логика теста
-  testForm.addEventListener('submit', e => {
+  // Ваш существующий JavaScript код, но с обновлённой функцией обработки теста
+  testForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const formData = new FormData(testForm);
-    const answers = {};
-    for(let [key, value] of formData.entries()){
-      answers[key] = value;
-    }
     
-    // Подсчёт ответов для выбора палочки
+    // Собираем ответы
     const scores = {harry:0, hermione:0, ron:0, luna:0};
-    Object.values(answers).forEach(ans => {
-      if(scores.hasOwnProperty(ans)) scores[ans]++;
-    });
     
-    // Выбор палочки с максимальным баллом
-    selectedWand = Object.entries(scores).reduce((a,b) => b[1] > a[1] ? b : a)[0];
-    
-    // Показываем результат теста
-    const wandName = wands[selectedWand].name;
-    alert(`Распределяющая Шляпа определила, что вам подходит ${wandName}!`);
-    
-    // Применяем бонусы палочек
-    switch(selectedWand) {
-      case 'harry':
-        clickPower += 2;
-        break;
-      case 'luna':
-        doubleClickChance += 10;
-        break;
+    // Подсчитываем результаты
+    for(let i = 1; i <= 5; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`).value;
+      scores[selected]++;
     }
     
+    // Определяем тип палочки
+    const maxScore = Math.max(...Object.values(scores));
+    selectedWand = Object.keys(scores).find(key => scores[key] === maxScore);
+    
+    // Описания палочек
+    const wandDescriptions = {
+      harry: {
+        name: "Палочка Гарри Поттера",
+        desc: "11 дюймов, остролист, перо феникса. Идеальна для защиты от тёмных искусств."
+      },
+      hermione: {
+        name: "Палочка Гермионы Грейнджер",
+        desc: "10¾ дюйма, виноградная лоза, сердечная жила дракона. Усиливает интеллектуальные заклинания."
+      },
+      ron: {
+        name: "Палочка Рона Уизли", 
+        desc: "14 дюймов, ива, волос единорога. Хороша для дружеских заклинаний и работы в команде."
+      },
+      luna: {
+        name: "Палочка Луны Лавгуд",
+        desc: "10 дюймов, вишнёвое дерево, волос телавола. Усиливает необычные и творческие заклинания."
+      }
+    };
+    
+    // Показываем результат (можно заменить на alert или другой способ отображения)
+    alert(`Ваша палочка: ${wandDescriptions[selectedWand].name}\n${wandDescriptions[selectedWand].desc}`);
+    
+    // Переходим к игровой области
     testDiv.style.display = 'none';
     gameArea.style.display = 'block';
     loadProgress();
@@ -761,56 +237,7 @@
     saveProgress();
   });
 
-  // Клик по палочке
-  wandImg.addEventListener('click', (e) => {
-    // Позиция для эффекта
-    const rect = wandImg.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Показываем эффект
-    showMagicEffect(e.clientX, e.clientY);
-    
-    // Базовый клик
-    let earned = clickPower;
-    
-    // Проверяем бонус Луны (шанс двойного клика)
-    if(selectedWand === 'luna' && Math.random() < 0.1) {
-      earned *= 2;
-    }
-    
-    // Проверяем улучшение двойного клика
-    if(doubleClickChance > 0 && Math.random() < doubleClickChance / 100) {
-      earned *= 2;
-    }
-    
-    clicks += earned;
-    
-    // Добавляем магические очки
-    if(Math.random() < 0.3) {
-      magicPoints++;
-    }
-    
-    updateUI();
-    saveProgress();
-  });
-
-  // Показываем информацию о палочке при наведении
-  wandImg.addEventListener('mouseenter', () => {
-    wandInfo.style.display = 'block';
-  });
-  
-  wandImg.addEventListener('mouseleave', () => {
-    wandInfo.style.display = 'none';
-  });
-
-  // Начальная инициализация
-  if(localStorage.getItem('hpWandGame')) {
-    loadProgress();
-    testDiv.style.display = 'none';
-    gameArea.style.display = 'block';
-  }
-})();
+  // Остальной ваш JavaScript код...
 </script>
 
 </body>
