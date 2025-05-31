@@ -2,17 +2,17 @@ const selectedWand = localStorage.getItem('selectedWand') || 'standard';
 let gold = 0;
 let clickPower = 1;
 
-// Telegram WebApp init
 Telegram.WebApp.ready();
 Telegram.WebApp.expand();
 
 const counterEl = document.getElementById("counter");
-// Устанавливаем палочку по выбору
-wandEl.style.backgroundImage = `url('images/wand-${selectedWand}.png')`;
-wandEl.style.backgroundSize = 'contain';
-wandEl.style.backgroundRepeat = 'no-repeat';
-wandEl.style.backgroundPosition = 'center';
 const wandImg = document.getElementById("wand");
+
+// Отображаем палочку
+wandImg.style.backgroundImage = `url('images/wand-${selectedWand}.png')`;
+wandImg.style.backgroundSize = 'contain';
+wandImg.style.backgroundRepeat = 'no-repeat';
+wandImg.style.backgroundPosition = 'center';
 
 async function loadProgress() {
   try {
@@ -23,7 +23,7 @@ async function loadProgress() {
     clickPower = parseInt(result.clickPower || '1', 10);
     updateCounter();
   } catch (e) {
-    console.error('Ошибка при загрузке из CloudStorage', e);
+    console.error('Ошибка загрузки прогресса', e);
   }
 }
 
@@ -34,7 +34,7 @@ async function saveProgress() {
       clickPower: clickPower.toString()
     });
   } catch (e) {
-    console.error('Ошибка при сохранении в CloudStorage', e);
+    console.error('Ошибка сохранения прогресса', e);
   }
 }
 
@@ -56,9 +56,8 @@ function buyUpgrade(type) {
     saveProgress();
     alert("Вы купили Палочку Оливандера! +1 к галлеонам за клик.");
   } else if (type === 'wand') {
-    alert("Недостаточно галлеонов для покупки.");
+    alert("Недостаточно галлеонов.");
   }
 }
 
-// Загрузка при старте
 loadProgress();
