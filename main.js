@@ -1,63 +1,167 @@
-const selectedWand = localStorage.getItem('selectedWand') || 'standard';
-let gold = 0;
-let clickPower = 1;
+(() => {
+  const wandEl = document.getElementById('wand');
+  const counterEl = document.getElementById('counter');
+  const testEl = document.getElementById('test');
+  const gameEl = document.getElementById('game');
+  const upgradesEl = document.getElementById('upgrades');
+  const upgradeListEl = document.getElementById('upgrade-list');
+  const btnUpgrades = document.getElementById('btn-upgrades');
+  const btnBack = document.getElementById('btn-back');
+  const btnReset = document.getElementById('btn-reset');
+  const questionEl = document.getElementById('question');
+  const answerButtonsEl = document.getElementById('answers');
 
-Telegram.WebApp.ready();
-Telegram.WebApp.expand();
+  let gold = 0;
+  let clickPower = 1;
+  let selectedWandKey = null;
 
-const counterEl = document.getElementById("counter");
-const wandImg = document.getElementById("wand");
+  const wandImages = {
+    brave: 'images/wand-brave.png',
+    wise: 'images/wand-wise.png',
+    ambitious: 'images/wand-ambitious.png',
+    loyal: 'images/wand-loyal.png'
+  };
 
-// Отображаем палочку
-wandImg.style.backgroundImage = `url('images/wand-${selectedWand}.png')`;
-wandImg.style.backgroundSize = 'contain';
-wandImg.style.backgroundRepeat = 'no-repeat';
-wandImg.style.backgroundPosition = 'center';
+  const upgrades = [
+    {
+      name: 'Палочка Оливандера',
+      level: 1,
+      basePrice: 50,
+      effect: () => { clickPower += 1; },
+      price: function () { return this.basePrice * this.level; }
+    }
+  ];
 
-async function loadProgress() {
-  try {
-    const keys = ['gold', 'clickPower'];
-    const result = await Telegram.WebApp.CloudStorage.getItems(keys);
+  const questions = [
+    {
+      text: "Какой твой любимый предмет в Хогвартсе?",
+      answers: [
+        { text: "Заклинания", wand: "brave" },
+        { text: "Зельеварение", wand: "ambitious" },
+        { text: "История магии", wand: "wise" },
+        { text: "Уход за магическими существами", wand: "loyal" }
+      ]
+    },
+    {
+      text: "Как бы ты провёл свободное время?",
+      answers: [
+        { text: "На дуэли", wand: "brave" },
+        { text: "В библиотеке", wand: "wise" },
+        { text: "Разгадывая тайны", wand: "ambitious" },
+        { text: "С друзьями", wand: "loyal" }
+      ]
+    },
+    {
+      text: "Какой магический артефакт ты бы выбрал?",
+      answers: [
+        { text: "Мантия-невидимка", wand: "loyal" },
+        { text: "Философский камень", wand: "ambitious" },
+        { text: "Мозгошмыг", wand: "wise" },
+        { text: "Снейпов мемуар", wand: "brave" }
+      ]
+    },
+    {
+      text: "Кем бы ты хотел стать?",
+      answers: [
+        { text: "Аврором", wand: "brave" },
+        { text: "Министром магии", wand: "ambitious" },
+        { text: "Профессором", wand: "wise" },
+        { text: "Зоологом", wand: "loyal" }
+      ]
+    },
+    {
+      text: "Твоя любимая магическая тварь?",
+      answers: [
+        { text: "Гиппогриф", wand: "brave" },
+        { text: "Сфинкс", wand: "ambitious" },
+        { text: "Феникс", wand: "loyal" },
+        { text: "Кентавр", wand: "wise" }
+      ]
+    }
+  ];
 
-    gold = parseInt(result.gold || '0', 10);
-    clickPower = parseInt(result.clickPower || '1', 10);
-    updateCounter();
-  } catch (e) {
-    console.error('Ошибка загрузки прогресса', e);
-  }
-}
+  let currentQuestionIndex = 0;
 
-async function saveProgress() {
-  try {
-    await Telegram.WebApp.CloudStorage.setItems({
-      gold: gold.toString(),
-      clickPower: clickPower.toString()
+  function showQuestion() {
+    const question = questions[currentQuestionIndex];
+    questionEl.textContent = question.text;
+    answerButtonsEl.innerHTML = '';
+    question.answers.forEach(ans => {
+      const btn = document.createElement('button');
+      btn.textContent = ans.text;
+      btn.onclick = () => {
+        selectedWandKey = ans.wand;
+        localStorage.setItem('selectedWandKey', selectedWandKey);
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          showQuestion();
+        } else {
+          startGame();
+        }
+      };
+      answerButtonsEl.appendChild(btn);
     });
-  } catch (e) {
-    console.error('Ошибка сохранения прогресса', e);
   }
-}
 
-function updateCounter() {
-  counterEl.textContent = `Галлеонов: ${gold}`;
-}
-
-wandImg.addEventListener("click", () => {
-  gold += clickPower;
-  updateCounter();
-  saveProgress();
-});
-
-function buyUpgrade(type) {
-  if (type === 'wand' && gold >= 50) {
-    gold -= 50;
-    clickPower += 1;
+  function startGame() {
+    testEl.classList.add('hidden');
+    gameEl.classList.remove('hidden');
+    wandEl.style.backgroundImage = `url('${wandImages[selectedWandKey]}')`;
     updateCounter();
-    saveProgress();
-    alert("Вы купили Палочку Оливандера! +1 к галлеонам за клик.");
-  } else if (type === 'wand') {
-    alert("Недостаточно галлеонов.");
   }
-}
 
-loadProgress();
+  function updateCounter() {
+    counterEl.textContent = `Галлеонов: ${gold}`;
+  }
+
+  wandEl.addEventListener("click", () => {
+    gold += clickPower;
+    updateCounter();
+  });
+
+  btnUpgrades.onclick = () => {
+    gameEl.classList.add('hidden');
+    upgradesEl.classList.remove('hidden');
+    renderUpgrades();
+  };
+
+  btnBack.onclick = () => {
+    upgradesEl.classList.add('hidden');
+    gameEl.classList.remove('hidden');
+  };
+
+  function renderUpgrades() {
+    upgradeListEl.innerHTML = '';
+    upgrades.forEach(upg => {
+      const btn = document.createElement('button');
+      btn.textContent = `${upg.name} (Ур. ${upg.level}) — ${upg.price()} галлеонов`;
+      btn.onclick = () => {
+        if (gold >= upg.price()) {
+          gold -= upg.price();
+          upg.effect();
+          upg.level++;
+          updateCounter();
+          renderUpgrades();
+        } else {
+          alert("Недостаточно галлеонов.");
+        }
+      };
+      upgradeListEl.appendChild(btn);
+    });
+  }
+
+  btnReset.onclick = () => {
+    if (confirm("Сбросить игру?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  };
+
+  // Начать с теста или игры
+  selectedWandKey = localStorage.getItem('selectedWandKey');
+  if (selectedWandKey) {
+    startGame();
+  } else {
+    showQuestion();
+  }
+})();
