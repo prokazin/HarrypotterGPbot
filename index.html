@@ -2,23 +2,18 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Волшебный Кликер Хогвартса</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Хогвартс Кликер</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <h1>🧙 ХОГВАРТС</h1>
+  <h1>ХОГВАРТС</h1>
   <div id="counter">Галлеонов: 0</div>
+  <div id="wand"></div>
 
-  <!-- Клик по палочке -->
-  <img src="wand.png" id="wand" alt="Волшебная палочка" />
+  <button onclick="buyUpgrade('wand')">Купить Палочку Оливандера (50 галлеонов)</button>
 
-  <h2>🔮 Апгрейды</h2>
-  <div id="shop">
-    <button onclick="buyUpgrade('wand')">Палочка Оливандера (+1/клик) – 50</button>
-  </div>
-
-  <script src="main.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
