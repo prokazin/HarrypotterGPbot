@@ -7,6 +7,11 @@ Telegram.WebApp.ready();
 Telegram.WebApp.expand();
 
 const counterEl = document.getElementById("counter");
+// Устанавливаем палочку по выбору
+wandEl.style.backgroundImage = `url('images/wand-${selectedWand}.png')`;
+wandEl.style.backgroundSize = 'contain';
+wandEl.style.backgroundRepeat = 'no-repeat';
+wandEl.style.backgroundPosition = 'center';
 const wandImg = document.getElementById("wand");
 
 async function loadProgress() {
