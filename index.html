@@ -2,17 +2,30 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Хогвартс Кликер</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Хогвартс: Волшебный Кликер</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>ХОГВАРТС</h1>
-  <div id="counter">Галлеонов: 0</div>
-  <div id="wand"></div>
+  <div id="test" class="visible">
+    <h1>Какую палочку ты получишь?</h1>
+    <div id="question"></div>
+    <div id="answers"></div>
+  </div>
 
-  <button onclick="buyUpgrade('wand')">Купить Палочку Оливандера (50 галлеонов)</button>
+  <div id="game" class="hidden">
+    <h1>Хогвартс: Волшебный Кликер</h1>
+    <div id="counter">Галлеонов: 0</div>
+    <div id="wand"></div>
+    <button id="btn-upgrades">Улучшения</button>
+    <button id="btn-reset">Сброс</button>
+  </div>
+
+  <div id="upgrades" class="hidden">
+    <h2>Улучшения</h2>
+    <div id="upgrade-list"></div>
+    <button id="btn-back">Назад</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
