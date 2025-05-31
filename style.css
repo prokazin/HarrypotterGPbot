@@ -1,45 +1,46 @@
 body {
-  margin: 0;
-  padding: 20px;
   font-family: 'Georgia', serif;
-  background: url('images/background.jpg.jpg') no-repeat center center fixed;
+  background: url("images/background.jpg.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #fff;
   text-align: center;
+  margin: 0;
+  padding: 20px;
   user-select: none;
 }
 
 h1 {
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 2px 2px 5px #000;
 }
 
 #counter {
   font-size: 24px;
-  margin: 20px 0;
   font-weight: bold;
-  text-shadow: 1px 1px 2px #000;
+  margin-bottom: 20px;
 }
 
-#wand {
+.wand {
   width: 150px;
+  height: 150px;
+  margin: 20px auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
-  user-select: none;
-  pointer-events: auto;
-  transition: transform 0.05s;
+  transition: transform 0.1s ease;
 }
 
-#wand:active {
-  transform: scale(1.05); /* убрано резкое приближение */
+.wand:active {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 button {
   padding: 10px 20px;
-  margin-top: 20px;
   font-size: 16px;
   background-color: #6a5acd;
-  border: none;
-  border-radius: 8px;
   color: white;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
 }
 
