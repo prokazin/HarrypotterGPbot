@@ -1,525 +1,526 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Хогвартс Кликер</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
-
-    body {
-      font-family: 'Cinzel Decorative', cursive, Arial, sans-serif;
-      background: url('images/background.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      user-select: none;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    h1, h2 {
-      text-shadow: 2px 2px 4px #000;
-      margin: 10px 0;
-    }
-
-    #counter {
-      font-size: 28px;
-      margin-bottom: 20px;
-      font-weight: bold;
-      text-shadow: 2px 2px 5px #000;
-    }
-
-    #wand {
-      width: 150px;
-      margin: 30px auto 15px;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-      user-select: none;
-      filter: drop-shadow(0 0 6px #f0e68c);
-      background-color: rgba(0,0,0,0.3);
-      border-radius: 15px;
-      padding: 10px;
-      box-sizing: content-box;
-      border: 2px solid #deb887;
-    }
-
-    #wand:active {
-      transform: scale(1.1) rotate(-5deg);
-      filter: drop-shadow(0 0 12px #ffd700);
-    }
-
-    nav {
-      margin-top: auto;
-      margin-bottom: 10px;
-    }
-
-    nav button {
-      padding: 10px 25px;
-      margin: 0 10px;
-      font-size: 18px;
-      background-color: #6a5acd;
-      border: none;
-      border-radius: 12px;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 0 5px #483d8b;
-      transition: background-color 0.3s ease;
-    }
-
-    nav button:hover, nav button.active {
-      background-color: #7b68ee;
-      box-shadow: 0 0 12px #8a2be2;
-    }
-
-    .tab {
-      display: none;
-      margin-top: 20px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      background: rgba(0,0,0,0.4);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px #222;
-    }
-
-    .tab.active {
-      display: block;
-    }
-
-    /* Тестовые вопросы */
-    #quiz p {
-      font-size: 20px;
-      margin: 15px 0 10px;
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    #quiz label {
-      display: block;
-      font-size: 18px;
-      margin: 5px 0;
-      cursor: pointer;
-    }
-
-    #quiz input[type="radio"] {
-      margin-right: 10px;
-      cursor: pointer;
-    }
-
-    #quiz button {
-      margin-top: 15px;
-      font-size: 18px;
-      padding: 8px 20px;
-    }
-
-    /* Улучшения */
-    .upgrade {
-      background: rgba(255,255,255,0.1);
-      margin-bottom: 15px;
-      padding: 12px;
-      border-radius: 12px;
-      box-shadow: inset 0 0 5px #555;
-      transition: background-color 0.4s ease;
-    }
-
-    .upgrade:hover {
-      background-color: rgba(255,255,255,0.25);
-    }
-
-    .upgrade button {
-      float: right;
-      background-color: #4b0082;
-      border-radius: 10px;
-      padding: 6px 14px;
-      font-size: 16px;
-      box-shadow: none;
-    }
-
-    .upgrade button:disabled {
-      background-color: #999;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    /* Таблица рейтинга */
-    #leaderboardList {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-size: 18px;
-      max-height: 250px;
-      overflow-y: auto;
-      text-align: left;
-    }
-
-    #leaderboardList li {
-      padding: 6px 12px;
-      border-bottom: 1px solid #666;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Хогвартс Кликер</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'MedievalSharp', cursive;
+    background: url('images/background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    margin: 0; padding: 20px;
+    user-select: none;
+    text-align: center;
+  }
+  h1, h2 {
+    text-shadow: 2px 2px 5px #000;
+  }
+  #counter {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000;
+  }
+  #wand {
+    width: 180px;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+    user-select: none;
+    filter: drop-shadow(0 0 5px #9acd32);
+    margin-bottom: 20px;
+  }
+  #wand:active {
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 0 15px #ffd700);
+  }
+  nav {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  nav button {
+    padding: 10px 25px;
+    margin: 0 5px;
+    font-size: 16px;
+    background-color: #6a5acd;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  nav button.active,
+  nav button:hover {
+    background-color: #7b68ee;
+  }
+  .tab {
+    display: none;
+    max-width: 550px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: left;
+  }
+  .tab.active {
+    display: block;
+  }
+  #upgradesList div {
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px #000;
+  }
+  #upgradesList button {
+    margin-top: 8px;
+    width: 100%;
+  }
+  #leaderboardList {
+    list-style: none;
+    padding-left: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: left;
+  }
+  #leaderboardList li {
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+  }
+  #test {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    background: rgba(0,0,0,0.65);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #000;
+    text-align: left;
+  }
+  #test h2 {
+    text-align: center;
+  }
+  #test button {
+    background-color: #6a5acd;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    margin-top: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+  }
+  #test button:hover {
+    background-color: #7b68ee;
+  }
+  #test label {
+    display: block;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Хогвартс Кликер</h1>
+<h1>Хогвартс Кликер</h1>
 
-  <!-- Тест перед выбором палочки -->
-  <div id="quiz" class="tab active">
-    <h2>Выберите свою палочку — пройдите тест</h2>
-    <form id="quizForm">
-      <div id="questionContainer"></div>
-      <button type="submit">Ответить</button>
-    </form>
+<!-- Тест для выбора палочки -->
+<div id="test">
+  <h2>Тест: Какая палочка подходит тебе?</h2>
+  <form id="testForm">
+    <div>
+      <p>1. Какое твое любимое магическое животное?</p>
+      <label><input type="radio" name="q1" value="harry" required> Феникс</label>
+      <label><input type="radio" name="q1" value="hermione"> Кот</label>
+      <label><input type="radio" name="q1" value="ron"> Крыса</label>
+      <label><input type="radio" name="q1" value="dumbledore"> Феникс</label>
+      <label><input type="radio" name="q1" value="snape"> Змея</label>
+      <label><input type="radio" name="q1" value="voldemort"> Змея</label>
+      <label><input type="radio" name="q1" value="gryffindor"> Лев</label>
+      <label><input type="radio" name="q1" value="ravenclaw"> Ворон</label>
+      <label><input type="radio" name="q1" value="hufflepuff"> Барсук</label>
+      <label><input type="radio" name="q1" value="slytherin"> Змея</label>
+    </div>
+
+    <div>
+      <p>2. Какой твой стиль магии?</p>
+      <label><input type="radio" name="q2" value="harry" required> Храбрый и решительный</label>
+      <label><input type="radio" name="q2" value="hermione"> Умный и расчетливый</label>
+      <label><input type="radio" name="q2" value="ron"> Верный и преданный</label>
+      <label><input type="radio" name="q2" value="dumbledore"> Мудрый и могущественный</label>
+      <label><input type="radio" name="q2" value="snape"> Таинственный и сильный</label>
+      <label><input type="radio" name="q2" value="voldemort"> Темный и амбициозный</label>
+      <label><input type="radio" name="q2" value="gryffindor"> Смелый и честный</label>
+      <label><input type="radio" name="q2" value="ravenclaw"> Интеллектуальный и любознательный</label>
+      <label><input type="radio" name="q2" value="hufflepuff"> Терпеливый и трудолюбивый</label>
+      <label><input type="radio" name="q2" value="slytherin"> Лидер и стратег</label>
+    </div>
+
+    <div>
+      <p>3. Какой твой любимый цвет?</p>
+      <label><input type="radio" name="q3" value="harry" required> Красный</label>
+      <label><input type="radio" name="q3" value="hermione"> Коричневый</label>
+      <label><input type="radio" name="q3" value="ron"> Оранжевый</label>
+      <label><input type="radio" name="q3" value="dumbledore"> Белый</label>
+      <label><input type="radio" name="q3" value="snape"> Черный</label>
+      <label><input type="radio" name="q3" value="voldemort"> Темно-зеленый</label>
+      <label><input type="radio" name="q3" value="gryffindor"> Красный</label>
+      <label><input type="radio" name="q3" value="ravenclaw"> Синий</label>
+      <label><input type="radio" name="q3" value="hufflepuff"> Желтый</label>
+      <label><input type="radio" name="q3" value="slytherin"> Зеленый</label>
+    </div>
+
+    <div>
+      <p>4. Какое твое любимое заклинание?</p>
+      <label><input type="radio" name="q4" value="harry" required> Экспекто Патронум</label>
+      <label><input type="radio" name="q4" value="hermione"> Репаро</label>
+      <label><input type="radio" name="q4" value="ron"> Вингардиум Левиоса</label>
+      <label><input type="radio" name="q4" value="dumbledore"> Авада Кедавра</label>
+      <label><input type="radio" name="q4" value="snape"> Окклюменция</label>
+      <label><input type="radio" name="q4" value="voldemort"> Авада Кедавра</label>
+      <label><input type="radio" name="q4" value="gryffindor"> Фириарис</label>
+      <label><input type="radio" name="q4" value="ravenclaw"> Редукто</label>
+      <label><input type="radio" name="q4" value="hufflepuff"> Ступефай</label>
+      <label><input type="radio" name="q4" value="slytherin"> Империус</label>
+    </div>
+
+    <div>
+      <p>5. Что для тебя важнее всего?</p>
+      <label><input type="radio" name="q5" value="harry" required> Смелость</label>
+      <label><input type="radio" name="q5" value="hermione"> Знания</label>
+      <label><input type="radio" name="q5" value="ron"> Дружба</label>
+      <label><input type="radio" name="q5" value="dumbledore"> Мудрость</label>
+      <label><input type="radio" name="q5" value="snape"> Верность</label>
+      <label><input type="radio" name="q5" value="voldemort"> Власть</label>
+      <label><input type="radio" name="q5" value="gryffindor"> Честь</label>
+      <label><input type="radio" name="q5" value="ravenclaw"> Логика</label>
+      <label><input type="radio" name="q5" value="hufflepuff"> Терпение</label>
+      <label><input type="radio" name="q5" value="slytherin"> Амбиции</label>
+    </div>
+
+    <button type="submit">Получить палочку</button>
+  </form>
+</div>
+
+<!-- Основной интерфейс -->
+<div id="gameArea" style="display:none;">
+  <div id="counter">Галлеоны: 0</div>
+  <img id="wand" src="images/wand_harry.jpeg" alt="Палочка" draggable="false" />
+  <nav>
+    <button class="tab-btn active" data-tab="game">Игра</button>
+    <button class="tab-btn" data-tab="upgrades">Улучшения</button>
+    <button class="tab-btn" data-tab="leaderboard">Рейтинг</button>
+  </nav>
+
+  <div id="game" class="tab active">
+    <p>Нажимай на палочку, чтобы зарабатывать галлеоны!</p>
   </div>
 
-  <!-- Игра -->
-  <div id="game" class="tab">
-    <div id="counter">Галлеоны: 0</div>
-    <img id="wand" src="" alt="Палочка героя" title="Кликни на палочку!" />
-  </div>
-
-  <!-- Улучшения -->
   <div id="upgrades" class="tab">
     <h2>Улучшения</h2>
     <div id="upgradesList"></div>
   </div>
 
-  <!-- Рейтинг -->
   <div id="leaderboard" class="tab">
     <h2>Рейтинг игроков</h2>
     <ul id="leaderboardList"></ul>
-    <button id="saveScoreBtn">Сохранить свой результат</button>
   </div>
+</div>
 
-  <nav>
-    <button id="navGame" class="active">Игра</button>
-    <button id="navUpgrades">Улучшения</button>
-    <button id="navLeaderboard">Рейтинг</button>
-  </nav>
+<script>
+  // Палочки: id, имя, картинка, описание
+  const wands = {
+    harry: {name:"Палочка Гарри Поттера", img:"images/wand_harry.jpeg", desc:"Оригинальная палочка Гарри Поттера, с сердцевиной из пера феникса."},
+    hermione: {name:"Палочка Гермионы Грейнджер", img:"images/wand_hermione.jpeg", desc:"Палочка Гермионы, точная и надежная."},
+    ron: {name:"Палочка Рона Уизли", img:"images/wand_ron.jpeg", desc:"Простая, но верная палочка Рона."},
+    dumbledore: {name:"Палочка Альбуса Дамблдора", img:"images/wand_dumbledore.jpeg", desc:"Великая палочка — самая мощная из всех."},
+    snape: {name:"Палочка Северуса Снэйпа", img:"images/wand_snape.jpeg", desc:"Тайная и мощная палочка."},
+    voldemort: {name:"Палочка Волдеморта", img:"images/wand_voldemort.jpeg", desc:"Темная палочка с сердцевиной из пера змеи."},
+    gryffindor: {name:"Палочка Гриффиндора", img:"images/wand_gryffindor.jpeg", desc:"Храбрая палочка рыцаря Гриффиндора."},
+    ravenclaw: {name:"Палочка Когтеврана", img:"images/wand_ravenclaw.jpeg", desc:"Умная и изящная палочка."},
+    hufflepuff: {name:"Палочка Пуффендуя", img:"images/wand_hufflepuff.jpeg", desc:"Терпеливая и надёжная палочка."},
+    slytherin: {name:"Палочка Слизерина", img:"images/wand_slytherin.jpeg", desc:"Хитрая и мощная палочка."}
+  };
 
-  <script>
-    // Палочки героев (названия файлов в папке images)
-    const wands = {
-      "harry": "wand_harry.png",
-      "hermione": "wand_hermione.png",
-      "ron": "wand_ron.png",
-      "dumbledore": "wand_dumbledore.png",
-      "snape": "wand_snape.png",
-      "voldemort": "wand_voldemort.png",
-      "gryffindor": "wand_gryffindor.png",
-      "ravenclaw": "wand_ravenclaw.png",
-      "hufflepuff": "wand_hufflepuff.png",
-      "slytherin": "wand_slytherin.png"
-    };
+  // Счётчик
+  let clicks = 0;
+  let clickPower = 1;
+  let selectedWand = null;
 
-    // Вопросы теста
-    const questions = [
-      {
-        question: "Какое качество для вас важнее всего?",
-        answers: [
-          { text: "Храбрость", wand: "gryffindor" },
-          { text: "Мудрость", wand: "ravenclaw" },
-          { text: "Верность", wand: "hufflepuff" },
-          { text: "Амбиции", wand: "slytherin" }
-        ]
-      },
-      {
-        question: "Какой предмет вам нравится в школе?",
-        answers: [
-          { text: "Защита от тёмных искусств", wand: "harry" },
-          { text: "Зельеварение", wand: "hermione" },
-          { text: "Травология", wand: "ron" },
-          { text: "Заклинания", wand: "dumbledore" }
-        ]
-      },
-      {
-        question: "Какой ваш любимый цвет?",
-        answers: [
-          { text: "Красный", wand: "harry" },
-          { text: "Жёлтый", wand: "hufflepuff" },
-          { text: "Синий", wand: "ravenclaw" },
-          { text: "Зелёный", wand: "slytherin" }
-        ]
-      },
-      {
-        question: "Что для вас главное в дружбе?",
-        answers: [
-          { text: "Поддержка", wand: "ron" },
-          { text: "Ум и знания", wand: "hermione" },
-          { text: "Сила и защита", wand: "dumbledore" },
-          { text: "Верность и смелость", wand: "harry" }
-        ]
-      },
-      {
-        question: "Как вы предпочитаете решать проблемы?",
-        answers: [
-          { text: "Прямо и решительно", wand: "harry" },
-          { text: "Анализируя и планируя", wand: "hermione" },
-          { text: "Обращаясь за помощью к друзьям", wand: "ron" },
-          { text: "Используя хитрость", wand: "slytherin" }
-        ]
-      }
-    ];
+  // Апгрейды
+  let upgrades = [
+    {id:'clickPower', name:'Сила клика', level:0, baseCost:5, costMult:1.5, desc:'Увеличивает галлеоны за клик на 1.'},
+    {id:'autoClick', name:'Автоклик', level:0, baseCost:20, costMult:1.7, desc:'Автоматически зарабатывает галлеоны каждую секунду.'}
+  ];
 
-    let selectedWands = {};
-    let currentQuestionIndex = 0;
+  // Локальный рейтинг (для примера)
+  let leaderboard = [];
 
-    const quizDiv = document.getElementById('quiz');
-    const questionContainer = document.getElementById('questionContainer');
-    const quizForm = document.getElementById('quizForm');
-    const gameDiv = document.getElementById('game');
-    const wandImg = document.getElementById('wand');
-    const counterEl = document.getElementById('counter');
-    const upgradesDiv = document.getElementById('upgrades');
-    const upgradesListEl = document.getElementById('upgradesList');
-    const leaderboardDiv = document.getElementById('leaderboard');
-    const leaderboardListEl = document.getElementById('leaderboardList');
-    const saveScoreBtn = document.getElementById('saveScoreBtn');
+  // DOM элементы
+  const counter = document.getElementById('counter');
+  const wandImg = document.getElementById('wand');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab');
+  const upgradesList = document.getElementById('upgradesList');
+  const leaderboardList = document.getElementById('leaderboardList');
+  const testDiv = document.getElementById('test');
+  const gameArea = document.getElementById('gameArea');
+  const testForm = document.getElementById('testForm');
 
-    const navButtons = {
-      game: document.getElementById('navGame'),
-      upgrades: document.getElementById('navUpgrades'),
-      leaderboard: document.getElementById('navLeaderboard')
-    };
+  // Функция обновления счёта
+  function updateClicksDisplay() {
+    counter.textContent = `Галлеоны: ${clicks.toFixed(0)}`;
+  }
 
-    let clicks = 0;
-    let upgrades = [
-      { id: 'clickPower', name: 'Сила клика', baseCost: 10, cost: 10, level: 0, effect: 1 },
-      { id: 'autoClick', name: 'Автокликер', baseCost: 50, cost: 50, level: 0, effect: 1 }
-    ];
-
-    let clickPower = 1;
-    let autoClickInterval = null;
-
-    // Отображение вопроса
-    function showQuestion(index) {
-      const q = questions[index];
-      questionContainer.innerHTML = `<p>${q.question}</p>`;
-      q.answers.forEach((ans, i) => {
-        const id = `q${index}_a${i}`;
-        questionContainer.innerHTML += `
-          <label for="${id}">
-            <input type="radio" name="answer" id="${id}" value="${ans.wand}" required>
-            ${ans.text}
-          </label>`;
-      });
+  // Обновить картинку палочки
+  function updateWandImage() {
+    if(selectedWand && wands[selectedWand]) {
+      wandImg.src = wands[selectedWand].img;
+      wandImg.alt = wands[selectedWand].name;
+      wandImg.title = wands[selectedWand].desc;
     }
+  }
 
-    // Подсчёт итоговой палочки
-    function getResultWand() {
-      const counts = {};
-      for(let key in selectedWands) {
-        const wand = selectedWands[key];
-        counts[wand] = (counts[wand] || 0) + 1;
+  // Покупка апгрейда
+  function buyUpgrade(id) {
+    const upg = upgrades.find(u => u.id === id);
+    if(!upg) return;
+    const cost = Math.floor(upg.baseCost * Math.pow(upg.costMult, upg.level));
+    if(clicks >= cost) {
+      clicks -= cost;
+      upg.level++;
+      if(upg.id === 'clickPower') {
+        clickPower = 1 + upg.level;
       }
-      // Палочка с максимальным количеством ответов
-      let maxCount = 0;
-      let result = 'harry';
-      for(let wand in counts) {
-        if(counts[wand] > maxCount) {
-          maxCount = counts[wand];
-          result = wand;
-        }
-      }
-      // Если несколько палочек равны — выберем первую (уже в result)
-      return result;
-    }
-
-    quizForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const formData = new FormData(quizForm);
-      const answer = formData.get('answer');
-      selectedWands[currentQuestionIndex] = answer;
-      currentQuestionIndex++;
-      if(currentQuestionIndex < questions.length) {
-        showQuestion(currentQuestionIndex);
-      } else {
-        // Конец теста
-        const chosenWandKey = getResultWand();
-        startGame(chosenWandKey);
-      }
-      quizForm.reset();
-    });
-
-    // Начинаем игру
-    function startGame(wandKey) {
-      quizDiv.classList.remove('active');
-      gameDiv.classList.add('active');
-      navButtons.game.classList.add('active');
-      navButtons.upgrades.classList.remove('active');
-      navButtons.leaderboard.classList.remove('active');
-
-      chosenWand = wands[wandKey];
-      wandImg.src = 'images/' + chosenWand;
-      clicks = 0;
-      clickPower = 1;
-      upgrades.forEach(upg => {
-        upg.level = 0;
-        upg.cost = upg.baseCost;
-      });
       saveProgress();
       updateClicksDisplay();
       renderUpgrades();
-
-      // Запускаем автокликер, если куплен
-      if(autoClickInterval) clearInterval(autoClickInterval);
-      autoClickInterval = setInterval(() => {
-        clicks += upgrades.find(u => u.id === 'autoClick').level * upgrades.find(u => u.id === 'autoClick').effect;
-        updateClicksDisplay();
-        saveProgress();
-      }, 1000);
+    } else {
+      alert('Недостаточно галлеонов!');
     }
+  }
 
-    // Обновить счет
-    function updateClicksDisplay() {
-      counterEl.textContent = `Галлеоны: ${clicks}`;
-    }
-
-    // Клик по палочке
-    wandImg.addEventListener('click', () => {
-      clicks += clickPower;
+  // Автокликер
+  setInterval(() => {
+    const autoUpg = upgrades.find(u => u.id === 'autoClick');
+    if(autoUpg && autoUpg.level > 0) {
+      clicks += autoUpg.level;
       updateClicksDisplay();
       saveProgress();
+    }
+  }, 1000);
+
+  // Отрисовка апгрейдов
+  function renderUpgrades() {
+    upgradesList.innerHTML = '';
+    upgrades.forEach(upg => {
+      const cost = Math.floor(upg.baseCost * Math.pow(upg.costMult, upg.level));
+      const div = document.createElement('div');
+      div.innerHTML = `<strong>${upg.name} (уровень: ${upg.level})</strong><br>${upg.desc}<br>Стоимость: ${cost} галлеонов`;
+      const btn = document.createElement('button');
+      btn.textContent = 'Купить';
+      btn.onclick = () => buyUpgrade(upg.id);
+      div.appendChild(btn);
+      upgradesList.appendChild(div);
     });
+  }
 
-    // Сохраняем прогресс
-    function saveProgress() {
-      const progress = {
-        clicks,
-        chosenWand,
-        upgrades
-      };
-      localStorage.setItem('hpProgress', JSON.stringify(progress));
+  // Отрисовка рейтинга
+  function renderLeaderboard() {
+    leaderboardList.innerHTML = '';
+    if(leaderboard.length === 0) {
+      leaderboardList.innerHTML = '<li>Пока нет игроков в рейтинге</li>';
+      return;
     }
+    leaderboard.sort((a,b) => b.score - a.score);
+    leaderboard.slice(0,10).forEach((player, i) => {
+      const li = document.createElement('li');
+      li.textContent = `${i+1}. ${player.name}: ${player.score} галлеонов`;
+      leaderboardList.appendChild(li);
+    });
+  }
 
-    // Загружаем прогресс
-    function loadProgress() {
-      const saved = localStorage.getItem('hpProgress');
-      if(saved) {
-        const progress = JSON.parse(saved);
-        clicks = progress.clicks || 0;
-        chosenWand = progress.chosenWand || wands.harry;
-        upgrades = progress.upgrades || upgrades;
-        wandImg.src = 'images/' + chosenWand;
-        updateClicksDisplay();
-        renderUpgrades();
+  // Сохранение прогресса в localStorage
+  function saveProgress() {
+    localStorage.setItem('hpSave', JSON.stringify({
+      clicks,
+      selectedWand,
+      upgrades
+    }));
+  }
 
-        quizDiv.classList.remove('active');
-        gameDiv.classList.add('active');
-        navButtons.game.classList.add('active');
-      } else {
-        showQuestion(0);
+  // Загрузка прогресса
+  function loadProgress() {
+    const saveData = JSON.parse(localStorage.getItem('hpSave'));
+    if(saveData) {
+      clicks = saveData.clicks || 0;
+      selectedWand = saveData.selectedWand || null;
+      if(saveData.upgrades) {
+        upgrades.forEach(u => {
+          const saved = saveData.upgrades.find(su => su.id === u.id);
+          if(saved) u.level = saved.level || 0;
+        });
       }
+      if(selectedWand) {
+        updateWandImage();
+      }
+      clickPower = 1 + (upgrades.find(u => u.id === 'clickPower')?.level || 0);
     }
+  }
 
-    // Рендер улучшений
-    function renderUpgrades() {
-      upgradesListEl.innerHTML = '';
-      upgrades.forEach(upg => {
-        const canBuy = clicks >= upg.cost;
-        const div = document.createElement('div');
-        div.className = 'upgrade';
-        div.innerHTML = `
-          <span>${upg.name} (уровень: ${upg.level})</span>
-          <button ${canBuy ? '' : 'disabled'} data-id="${upg.id}">Купить за ${upg.cost} галлеонов</button>
-        `;
-        upgradesListEl.appendChild(div);
+  // Обработка выбора палочки и начала игры
+  testForm.onsubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(testForm);
+    const answers = {};
+    for(let [key, value] of formData.entries()) {
+      answers[key] = value;
+    }
+    // Подсчёт баллов по каждому варианту палочки
+    const scores = {};
+    for(let ans in answers) {
+      scores[answers[ans]] = (scores[answers[ans]] || 0) + 1;
+    }
+    // Выбор палочки с максимальным количеством совпадений
+    selectedWand = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
+    updateWandImage();
+    testDiv.style.display = 'none';
+    gameArea.style.display = 'block';
+    saveProgress();
+    updateClicksDisplay();
+    renderUpgrades();
+    renderLeaderboard();
+  };
+
+  // Смена табов
+  tabs.forEach(tab => {
+    tab.onclick = () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const tabName = tab.dataset.tab;
+      tabContents.forEach(tc => {
+        tc.classList.toggle('active', tc.id === tabName);
       });
-    }
+    };
+  });
 
-    // Покупка улучшения
-    upgradesListEl.addEventListener('click', e => {
-      if(e.target.tagName === 'BUTTON') {
-        const id = e.target.getAttribute('data-id');
-        const upg = upgrades.find(u => u.id === id);
-        if(clicks >= upg.cost) {
-          clicks -= upg.cost;
-          upg.level++;
-          // Увеличение стоимости на 1.5 раза
-          upg.cost = Math.floor(upg.baseCost * Math.pow(1.5, upg.level));
-          if(id === 'clickPower') {
-            clickPower = 1 + upg.level; // увеличиваем клик
-          }
-          if(id === 'autoClick') {
-            // Эффект автокликера = уровень
-            // Интервал уже запущен, просто увеличим значение добавляемое в setInterval
-          }
-          updateClicksDisplay();
-          renderUpgrades();
-          saveProgress();
-        }
-      }
-    });
+  // Клик по палочке
+  wandImg.onclick = () => {
+    clicks += clickPower;
+    updateClicksDisplay();
+    saveProgress();
+  };
 
-    // Навигация по вкладкам
-    navButtons.game.addEventListener('click', () => {
-      quizDiv.classList.remove('active');
-      gameDiv.classList.add('active');
-      upgradesDiv.classList.remove('active');
-      leaderboardDiv.classList.remove('active');
-
-      navButtons.game.classList.add('active');
-      navButtons.upgrades.classList.remove('active');
-      navButtons.leaderboard.classList.remove('active');
-    });
-
-    navButtons.upgrades.addEventListener('click', () => {
-      quizDiv.classList.remove('active');
-      gameDiv.classList.remove('active');
-      upgradesDiv.classList.add('active');
-      leaderboardDiv.classList.remove('active');
-
-      navButtons.game.classList.remove('active');
-      navButtons.upgrades.classList.add('active');
-      navButtons.leaderboard.classList.remove('active');
-    });
-
-    navButtons.leaderboard.addEventListener('click', () => {
-      quizDiv.classList.remove('active');
-      gameDiv.classList.remove('active');
-      upgradesDiv.classList.remove('active');
-      leaderboardDiv.classList.add('active');
-
-      navButtons.game.classList.remove('active');
-      navButtons.upgrades.classList.remove('active');
-      navButtons.leaderboard.classList.add('active');
-
+  // Загрузка прогресса при старте
+  window.onload = () => {
+    loadProgress();
+    if(selectedWand) {
+      testDiv.style.display = 'none';
+      gameArea.style.display = 'block';
+      updateClicksDisplay();
+      renderUpgrades();
       renderLeaderboard();
-    });
-
-    // Таблица лидеров (локальная симуляция)
-    function renderLeaderboard() {
-      let leaderboard = JSON.parse(localStorage.getItem('hpLeaderboard') || '[]');
-      leaderboard.sort((a,b) => b.score - a.score);
-      leaderboardListEl.innerHTML = '';
-      leaderboard.forEach((player, i) => {
-        const li = document.createElement('li');
-        li.textContent = `${i+1}. ${player.name}: ${player.score} галлеонов`;
-        leaderboardListEl.appendChild(li);
-      });
     }
-
-    saveScoreBtn.addEventListener('click', () => {
-      const name = prompt('Введите ваше имя для рейтинга');
-      if(!name) return alert('Имя обязательно');
-      let leaderboard = JSON.parse(localStorage.getItem('hpLeaderboard') || '[]');
-      leaderboard.push({name: name.trim(), score: clicks});
-      localStorage.setItem('hpLeaderboard', JSON.stringify(leaderboard));
-      alert('Результат сохранён!');
-      renderLeaderboard();
-    });
-
-    // Загрузка прогресса или начало теста
-    window.addEventListener('load', () => {
-      loadProgress();
-      if(!gameDiv.classList.contains('active')) {
-        showQuestion(0);
-      }
-    });
-  </script>
-
+  };
+</script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center; min-height: 100vh;
+    flex-direction: column;
+  }
+  #test {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+  }
+  #test h2 {
+    text-align: center;
+  }
+  #test div {
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+  button {
+    cursor: pointer;
+    padding: 8px 12px;
+    background: #4caf50;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  button:hover {
+    background: #45a049;
+  }
+  #gameArea {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+  }
+  #counter {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  img#wand {
+    cursor: pointer;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 15px auto;
+    user-select: none;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .tab-btn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: 1px solid #4caf50;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+  }
+  .tab-btn.active {
+    background: #4caf50;
+    color: white;
+  }
+  .tab {
+    display: none;
+  }
+  .tab.active {
+    display: block;
+  }
+  #upgradesList div {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+  #leaderboardList {
+    list-style: none;
+    padding-left: 0;
+  }
+  #leaderboardList li {
+    margin-bottom: 6px;
+  }
+</style>
 </body>
-</html>
