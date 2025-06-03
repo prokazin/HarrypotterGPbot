@@ -47,3 +47,24 @@ button {
 button:hover {
   background-color: #7b68ee;
 }
+
+/* Анимация кликов */
+.gold-popup {
+  position: absolute;
+  color: gold;
+  font-weight: bold;
+  pointer-events: none;
+  animation: float-up 1s ease-out forwards;
+}
+
+@keyframes float-up {
+  to { transform: translateY(-50px); opacity: 0; }
+}
+
+/* Стили для улучшений */
+.upgrades {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
